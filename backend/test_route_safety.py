@@ -10,6 +10,7 @@ from route_safety_service import (
     find_bridges_in_corridor,
     score_all_routes,
     _merge_danger_zones,
+    build_grid,
     SAMPLE_INTERVAL_M,
     MAX_TIME_FACTOR,
     MAX_DIST_FACTOR,

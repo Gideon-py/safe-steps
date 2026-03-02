@@ -35,6 +35,7 @@ MAX_DIST_FACTOR = 1.20   # 20 %
 BRIDGE_BONUS = 0.05
 
 SAMPLE_INTERVAL_M = 15
+GRID_CELL_DEG = 0.0004  # ~44m at Bern latitude
 
 
 # ── Geometry helpers ────────────────────────────────────────
@@ -80,57 +81,82 @@ def within_radius(lat1, lon1, lat2, lon2, radius_m):
     return haversine(lat1, lon1, lat2, lon2) <= radius_m
 
 
-# ── Feature proximity ──────────────────────────────────────
+# ── Spatial grid for fast lookups ──────────────────────────
 
-def _ways_near(pt, ways, radius_m=30):
-    """Find ways whose geometry passes within radius_m of pt."""
-    lat, lng = pt
-    results = []
-    for w in ways:
+def _cell(lat, lon):
+    return (int(lat / GRID_CELL_DEG), int(lon / GRID_CELL_DEG))
+
+
+def build_grid(osm):
+    """Pre-index OSM features in a spatial grid for O(1) lookups."""
+    grid = {}
+    way_store = {}
+
+    for i, w in enumerate(osm.get("ways", [])):
+        way_store[i] = w
         for g in w.get("geometry", []):
-            if within_radius(lat, lng, g["lat"], g["lon"], radius_m):
-                results.append(w)
-                break
-    return results
+            c = _cell(g["lat"], g["lon"])
+            bucket = grid.setdefault(c, {"wids": set(), "cross": [], "stat": []})
+            bucket["wids"].add(i)
+
+    for p in osm.get("crossings", []):
+        c = _cell(p["lat"], p["lon"])
+        grid.setdefault(c, {"wids": set(), "cross": [], "stat": []})["cross"].append(p)
+
+    for p in osm.get("stations", []):
+        c = _cell(p["lat"], p["lon"])
+        grid.setdefault(c, {"wids": set(), "cross": [], "stat": []})["stat"].append(p)
+
+    return grid, way_store
 
 
-def _points_near(pt, points, radius_m=30):
+def _grid_nearby(pt, grid, way_store):
+    """Retrieve ways / crossings / stations near pt using grid."""
     lat, lng = pt
-    return [p for p in points if within_radius(lat, lng, p["lat"], p["lon"], radius_m)]
+    c = _cell(lat, lng)
+    wids = set()
+    crosses = []
+    stats = []
+    for dx in (-1, 0, 1):
+        for dy in (-1, 0, 1):
+            b = grid.get((c[0] + dx, c[1] + dy))
+            if b:
+                wids.update(b["wids"])
+                crosses.extend(b["cross"])
+                stats.extend(b["stat"])
+    return [way_store[w] for w in wids if w in way_store], crosses, stats
 
 
 # ── Scoring ────────────────────────────────────────────────
 
-def _score_sample(pt, osm, radius_m=30):
-    """Return (traffic_add, safe_sub, crossing_count) for one sample."""
+def _score_sample_fast(pt, ways, crosses, stats):
+    """Return (traffic_add, safe_sub, crossing_ids) for one sample."""
     traffic = 0.0
     safe = 0.0
-    crossings = 0
+    cross_ids = set()
 
-    for w in _ways_near(pt, osm.get("ways", []), radius_m):
+    for w in ways:
         hw = w.get("tags", {}).get("highway", "")
-        # High risk (+1.0)
         if hw in ("trunk", "primary", "secondary"):
             traffic += 1.0
-        # Medium risk (+0.5)
         elif hw == "tertiary":
             traffic += 0.5
-        # Safe (-0.5)
         elif hw in ("footway", "pedestrian", "living_street", "cycleway"):
             safe += 0.5
 
-    # Stations / bus stops  (+1.0 / +0.5)
-    for s in _points_near(pt, osm.get("stations", []), radius_m):
+    for s in stats:
         tags = s.get("tags", {})
         if tags.get("railway") == "station":
             traffic += 1.0
         elif tags.get("amenity") == "bus_station":
             traffic += 0.5
 
-    # Crossings
-    crossings += len(_points_near(pt, osm.get("crossings", []), 20))
+    # Deduplicate crossings by position
+    for c in crosses:
+        cid = f"{c['lat']:.5f},{c['lon']:.5f}"
+        cross_ids.add(cid)
 
-    return traffic, safe, crossings
+    return traffic, safe, cross_ids
 
 
 def hotspot_proximity(samples) -> float:
@@ -153,10 +179,12 @@ def score_single_route(
     min_duration: float,
     min_distance: float,
     bridge_bonus: bool = False,
+    _grid_data=None,
 ) -> Optional[dict]:
     """
     Score one route.  Returns None if it exceeds the detour limit.
     coords: [lng, lat] GeoJSON order.
+    _grid_data: optional pre-built (grid, way_store) tuple for efficiency.
     """
     # Detour limit check
     if min_duration > 0 and min_distance > 0:
@@ -165,21 +193,33 @@ def score_single_route(
         if over_time and over_dist:
             return None  # discard
 
-    samples = sample_route(coords)
+    # Dynamic sample interval based on route length
+    interval = SAMPLE_INTERVAL_M
+    if distance_m > 5000:
+        interval = 80
+    elif distance_m > 2000:
+        interval = 40
+
+    samples = sample_route(coords, interval_m=interval)
     n = max(len(samples), 1)
+
+    # Build or reuse spatial grid
+    if _grid_data:
+        grid, way_store = _grid_data
+    else:
+        grid, way_store = build_grid(osm)
 
     total_traffic = 0.0
     total_safe = 0.0
-    total_crossings = 0
-
+    all_crossings = set()
     danger_zones: list = []
 
     for pt in samples:
-        t, s, c = _score_sample(pt, osm)
+        ways, crosses, stats = _grid_nearby(pt, grid, way_store)
+        t, s, cids = _score_sample_fast(pt, ways, crosses, stats)
         total_traffic += t
         total_safe += s
-        total_crossings += c
-        # Collect danger zones for high-risk samples
+        all_crossings.update(cids)
         if t >= 1.0:
             danger_zones.append({"lat": pt[0], "lng": pt[1], "risk": round(t, 1)})
 
@@ -187,7 +227,10 @@ def score_single_route(
     raw_traffic = (total_traffic - total_safe) / n
     norm_traffic = max(0.0, min(1.0, raw_traffic / 2.0))
 
-    norm_crossing = min(1.0, total_crossings / n / 1.5)
+    # Unique crossings per km (higher = more risky)
+    route_km = max(0.1, distance_m / 1000)
+    crossings_per_km = len(all_crossings) / route_km
+    norm_crossing = min(1.0, crossings_per_km / 25.0)  # 25 crossings/km = 100%
 
     if min_duration > 0:
         norm_time = max(0.0, min(1.0, (duration_s / min_duration - 1.0) / 0.15))
@@ -289,7 +332,9 @@ def score_all_routes(ors_features: list, osm: dict) -> list:
     if not ors_features:
         return []
 
-    # Determine fastest (min duration) and shortest (min distance)
+    # Pre-build spatial grid once for all routes
+    grid_data = build_grid(osm)
+
     min_dur = min(f["properties"]["summary"]["duration"] for f in ors_features)
     min_dist = min(f["properties"]["summary"]["distance"] for f in ors_features)
 
@@ -299,7 +344,7 @@ def score_all_routes(ors_features: list, osm: dict) -> list:
         dist = feat["properties"]["summary"]["distance"]
         dur = feat["properties"]["summary"]["duration"]
 
-        result = score_single_route(coords, dist, dur, osm, min_dur, min_dist)
+        result = score_single_route(coords, dist, dur, osm, min_dur, min_dist, _grid_data=grid_data)
         if result is None:
             continue  # exceeds detour limit
 
