@@ -1,0 +1,206 @@
+{
+  "project_name": "SafeWay Bern",
+  "design_philosophy": {
+    "theme": "Swiss Safety",
+    "core_principles": [
+      "Clarity over Decoration: The map is the hero. UI controls must float and not block.",
+      "Safety Signal: Use color strictly for safety communication (Green=Safe, Red=Danger).",
+      "Trustworthy Typography: Swiss-style legible fonts for rapid scanning.",
+      "Contextual Data: Environmental data (River, Weather) must be visible but secondary."
+    ],
+    "mood": "Calm, Vigilant, Precise, Protective"
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Barlow, sans-serif",
+      "body": "Public Sans, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "scale": {
+      "h1": "text-4xl md:text-5xl font-bold tracking-tight",
+      "h2": "text-3xl font-semibold tracking-tight",
+      "h3": "text-2xl font-medium",
+      "body_lg": "text-lg leading-relaxed",
+      "body": "text-base leading-normal",
+      "caption": "text-sm text-muted-foreground",
+      "label": "text-xs font-bold uppercase tracking-widest text-muted-foreground"
+    },
+    "weights": {
+      "normal": 400,
+      "medium": 500,
+      "bold": 700
+    }
+  },
+  "colors": {
+    "palette": {
+      "background": "#F8FAFC",
+      "foreground": "#0F172A",
+      "card": "rgba(255, 255, 255, 0.9)",
+      "card_foreground": "#1E293B",
+      "primary": "#0ea5e9",
+      "primary_foreground": "#FFFFFF",
+      "secondary": "#F1F5F9",
+      "secondary_foreground": "#0F172A",
+      "muted": "#F1F5F9",
+      "muted_foreground": "#64748B",
+      "accent": "#F1F5F9",
+      "accent_foreground": "#0F172A",
+      "destructive": "#EF4444",
+      "destructive_foreground": "#FFFFFF",
+      "border": "#E2E8F0",
+      "input": "#E2E8F0",
+      "ring": "#0ea5e9"
+    },
+    "safety_system": {
+      "safe": "#10B981",
+      "moderate": "#F59E0B",
+      "risky": "#EF4444",
+      "neutral": "#64748B",
+      "water": "#06B6D4",
+      "school": "#3B82F6"
+    }
+  },
+  "layout": {
+    "spacing": {
+      "container_padding": "p-4 md:p-6 lg:p-8",
+      "section_gap": "gap-8",
+      "item_gap": "gap-4"
+    },
+    "grid_system": {
+      "dashboard": "grid grid-cols-1 md:grid-cols-12 gap-4 h-screen overflow-hidden",
+      "sidebar": "col-span-1 md:col-span-4 lg:col-span-3 h-full overflow-y-auto z-10",
+      "map_area": "absolute inset-0 z-0"
+    },
+    "z_index": {
+      "map": "z-0",
+      "overlays": "z-10",
+      "modals": "z-50",
+      "tooltips": "z-60"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm rounded-md px-4 py-2 font-medium transition-colors",
+      "secondary": "bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-md px-4 py-2 font-medium transition-colors",
+      "ghost": "hover:bg-accent hover:text-accent-foreground rounded-md px-4 py-2 transition-colors",
+      "icon": "h-10 w-10 p-0 rounded-full flex items-center justify-center bg-white shadow-md hover:bg-gray-50 transition-transform hover:scale-105"
+    },
+    "cards": {
+      "glass": "bg-white/80 backdrop-blur-md border border-white/20 shadow-lg rounded-xl",
+      "solid": "bg-white border border-border shadow-sm rounded-lg",
+      "hover_effect": "hover:shadow-md hover:border-primary/50 transition-all duration-200"
+    },
+    "inputs": {
+      "default": "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+    }
+  },
+  "visual_enhancers": {
+    "shadows": {
+      "soft": "shadow-[0_4px_12px_rgba(0,0,0,0.05)]",
+      "floating": "shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
+    },
+    "borders": {
+      "subtle": "border border-slate-200",
+      "glass": "border border-white/40"
+    },
+    "radius": {
+      "default": "rounded-lg",
+      "large": "rounded-xl",
+      "pill": "rounded-full"
+    }
+  },
+  "icons": {
+    "library": "lucide-react",
+    "style": "stroke-width: 2px; size: 20px"
+  },
+  "motion": {
+    "transitions": {
+      "default": "transition-all duration-200 ease-in-out",
+      "slow": "transition-all duration-500 ease-out"
+    },
+    "animations": {
+      "pulse": "animate-pulse",
+      "slide_in": "animate-in slide-in-from-bottom-4 duration-300",
+      "fade_in": "animate-in fade-in duration-300"
+    }
+  },
+  "accessibility": {
+    "contrast": "Ensure text is APCA compliant. Use dark text on light backgrounds.",
+    "focus": "Visible focus rings on all interactive elements.",
+    "aria": "Use aria-labels for map markers and icon-only buttons."
+  },
+  "media": {
+    "images": [
+      {
+        "category": "auth_background",
+        "url": "https://images.unsplash.com/photo-1675422409769-26556c0eb312?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHw0fHxCZXJuJTIwU3dpdHplcmxhbmQlMjBjaXR5JTIwYWVyaWFsJTIwdmlldyUyMHJpdmVyJTIwQWFyZXxlbnwwfHx8fDE3NzI0NjEwNDZ8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Aerial view of Bern city with Aare river for login page side panel."
+      },
+       {
+        "category": "landing_hero",
+         "url": "https://images.unsplash.com/photo-1615674484853-c0714ba6e534?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwyfHxCZXJuJTIwU3dpdHplcmxhbmQlMjBjaXR5JTIwYWVyaWFsJTIwdmlldyUyMHJpdmVyJTIwQWFyZXxlbnwwfHx8fDE3NzI0NjEwNDZ8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Bern city view for landing/welcome screens"
+      }
+    ]
+  },
+  "map_design": {
+    "provider": "OpenStreetMap",
+    "style": "CartoDB Voyager (Light, Clean)",
+    "markers": {
+      "school": {
+        "color": "#3B82F6",
+        "type": "pulsing_circle",
+        "icon": "School"
+      },
+      "hotspot": {
+        "color": "#EF4444",
+        "type": "triangle_warning",
+        "icon": "AlertTriangle"
+      },
+      "start": {
+        "color": "#10B981",
+        "type": "home_pin",
+        "icon": "Home"
+      }
+    },
+    "routes": {
+      "safest": {
+        "color": "#10B981",
+        "weight": 6,
+        "opacity": 0.9,
+        "dashArray": null
+      },
+      "balanced": {
+        "color": "#F59E0B",
+        "weight": 5,
+        "opacity": 0.8,
+        "dashArray": "5, 10"
+      },
+      "fastest": {
+        "color": "#64748B",
+        "weight": 4,
+        "opacity": 0.6,
+        "dashArray": "10, 10"
+      }
+    }
+  },
+  "instructions_to_main_agent": [
+    "Install 'leaflet' and 'react-leaflet' immediately.",
+    "Install 'lucide-react' for icons.",
+    "Create a layout where the Map is the background component (z-0) and all other UI elements are overlays (z-10+).",
+    "Use the 'glass' card style for the Route Panel and Environmental Widget to maintain map visibility.",
+    "Ensure the Environmental Widget is compact and uses icons for weather, river temp, and warnings.",
+    "The Route Panel should use a 'Radio Group' style for selecting between Safest, Balanced, and Fastest routes.",
+    "Use Shadcn 'Sonner' for safety alerts and notifications.",
+    "Mock environmental data if APIs are not available, but structure it to be replaceable.",
+    "Do not block the map interaction. Use 'pointer-events-none' on overlay containers and 'pointer-events-auto' on the actual buttons/cards."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Avoid generic 'dashboard' templates. This is a map-centric app.",
+    "Use 2-3x more spacing (p-6, p-8) inside cards.",
+    "Add 'data-testid' to all interactive elements.",
+    "NEVER use emojis for icons. Use Lucide React icons.",
+    "Ensure high contrast for safety scores.",
+    "On mobile, the route panel should be a bottom sheet/drawer."
+  ]
+}
