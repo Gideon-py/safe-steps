@@ -107,7 +107,7 @@ export default function DashboardPage() {
         </div>
 
         {/* User info + logout */}
-        <div className="absolute bottom-4 right-4 pointer-events-auto">
+        <div className="absolute bottom-14 right-4 pointer-events-auto">
           <div className="glass-panel rounded-xl px-3 py-2 flex items-center gap-2">
             <User className="h-4 w-4 text-muted-foreground" />
             <span className="text-xs font-medium text-foreground hidden sm:inline">{user?.name}</span>
