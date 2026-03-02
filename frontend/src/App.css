@@ -1,34 +1,116 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Auth page */
+.auth-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+@media (min-width: 768px) {
+  .auth-split {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.auth-image {
+  display: none;
+  background-size: cover;
+  background-position: center;
+  position: relative;
 }
 
-.App-link {
-    color: #61dafb;
+.auth-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.3) 0%, rgba(15, 23, 42, 0.5) 100%);
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+@media (min-width: 768px) {
+  .auth-image {
+    display: block;
+  }
+}
+
+/* Route type indicator */
+.route-indicator {
+  width: 4px;
+  border-radius: 2px;
+  min-height: 60px;
+}
+
+.route-indicator.safest {
+  background: #10B981;
+}
+.route-indicator.balanced {
+  background: #F59E0B;
+}
+.route-indicator.fastest {
+  background: #64748B;
+}
+
+/* Data source badge */
+.source-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.source-badge.live {
+  background: #DCFCE7;
+  color: #166534;
+}
+
+.source-badge.demo {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+/* Risk factor list */
+.risk-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+}
+
+.risk-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.risk-dot.high { background: #EF4444; }
+.risk-dot.medium { background: #F59E0B; }
+.risk-dot.low { background: #10B981; }
+
+/* Transition utility */
+.slide-up-enter {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: slideUp 0.3s ease forwards;
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Map click hint */
+.map-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
 }
