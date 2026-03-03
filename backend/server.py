@@ -21,6 +21,7 @@ from providers import (
 )
 from ors_client import ORSClient, ORSError
 from overpass_client import OverpassClient
+from otd_client import OTDClient
 from route_safety_service import (
     score_all_routes, score_bridge_route, find_bridges_in_corridor, haversine,
 )
@@ -45,9 +46,10 @@ aare_prov = AareProvider()
 flood_prov = FloodProvider()
 traffic_prov = TrafficProvider()
 
-# ORS + Overpass
+# ORS + Overpass + OTD Traffic
 ors = ORSClient()
 overpass = OverpassClient()
+otd = OTDClient()
 
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
@@ -175,7 +177,7 @@ async def get_environment_status():
 # ──────────── Core routing pipeline ────────────
 
 async def _compute_routes(start_lat, start_lng, end_lat, end_lng):
-    """Shared pipeline: ORS → Overpass → Safety scoring → bridge bonus."""
+    """Shared pipeline: ORS → Overpass → OTD Traffic → Safety scoring → bridge bonus."""
     # 1. Get ORS alternatives
     ors_data = await ors.get_alternatives(start_lat, start_lng, end_lat, end_lng)
     features = ors_data.get("features", [])
@@ -188,25 +190,43 @@ async def _compute_routes(start_lat, start_lng, end_lat, end_lng):
         all_coords.extend(f["geometry"]["coordinates"])
     osm = await overpass.get_features(all_coords)
 
-    # 3. Score all routes
-    scored = score_all_routes(features, osm)
-    if not scored:
-        raise HTTPException(404, "All routes exceed detour limits")
+    # 3. Fetch live traffic data for each route in parallel
+    traffic_data_list = []
+    incidents_list = []
+    for f in features:
+        coords = f["geometry"]["coordinates"]
+        traffic = await otd.get_traffic_near_route(coords)
+        incidents = await otd.get_incidents_near_route(coords)
+        traffic_data_list.append(traffic)
+        incidents_list.append(incidents)
 
-    # 4. Check for pedestrian bridges → bonus route
+    # 4. Score all routes with traffic data
+    scored = score_all_routes(features, osm, traffic_data_list, incidents_list)
+    if not scored:
+        raise HTTPException(404, "All routes exceed detour limits or have excessive traffic")
+
+    # 5. Check for pedestrian bridges → bonus route
     min_dur = min(r["duration_s"] for r in scored)
     min_dist = min(r["distance_m"] for r in scored)
     primary_coords = features[0]["geometry"]["coordinates"]
     bridges = find_bridges_in_corridor(primary_coords, osm, corridor_m=100)
 
-    for blat, blng in bridges[:1]:  # max 1 bridge route
+    # Use first route's traffic data for bridge route
+    bridge_traffic = traffic_data_list[0] if traffic_data_list else None
+    bridge_incidents = incidents_list[0] if incidents_list else None
+
+    for blat, blng in bridges[:1]:
         try:
             via_data = await ors.get_route_via(
                 start_lat, start_lng, blat, blng, end_lat, end_lng
             )
             via_features = via_data.get("features", [])
             if via_features:
-                br_result = score_bridge_route(via_features[0], osm, min_dur, min_dist)
+                br_result = score_bridge_route(
+                    via_features[0], osm, min_dur, min_dist,
+                    traffic_data=bridge_traffic,
+                    incidents=bridge_incidents,
+                )
                 if br_result:
                     scored.append(br_result)
         except Exception as e:
@@ -278,12 +298,24 @@ async def calculate_routes(data: RouteBySchool):
         r["eta"] = eta
         r["distance_meters"] = r["distance_m"]
 
+    # Determine traffic source
+    traffic_source = "Zeitbasiert (geschaetzt)"
+    for r in routes:
+        if r.get("traffic_level") and r["traffic_level"] != "unknown":
+            # Check if any route has live OTD data
+            traffic_source = "OTD (geschaetzt)"
+            break
+
     return {
         "routes": routes,
         "school": school,
         "start": {"lat": data.start_lat, "lng": data.start_lng},
         "routing_source": "ors_live",
-        "data_sources": {"routing": "ORS", "safety": "Overpass+OSM"},
+        "data_sources": {
+            "routing": "ORS",
+            "safety": "Overpass+OSM",
+            "traffic": traffic_source,
+        },
     }
 
 # ──────────── Saved routes ────────────

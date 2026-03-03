@@ -5,10 +5,18 @@ import "leaflet/dist/leaflet.css";
 
 const BERN_CENTER = [46.9480, 7.4474];
 
-// Colors: safest=green (always primary), others are secondary
-const SAFEST_COLOR = "#10B981";
-const OTHER_COLOR = "#94A3B8";
-const SELECTED_OTHER_COLOR = "#3B82F6";
+// New unified color system
+const ROUTE_COLORS = {
+  safest: "#10B981",      // Emerald green
+  balanced: "#F59E0B",    // Amber
+  fastest: "#64748B",     // Slate
+  selected: "#3B82F6",    // Blue highlight
+};
+
+const DANGER_COLORS = {
+  high: "#EF4444",
+  medium: "#F59E0B",
+};
 
 function createIcon(className, size = [22, 22]) {
   return L.divIcon({
@@ -46,10 +54,21 @@ function FitBounds({ routes, startPoint, selectedSchool }) {
   return null;
 }
 
-/** Convert GeoJSON [lng,lat] → Leaflet [lat,lng] */
+/** Convert GeoJSON [lng,lat] -> Leaflet [lat,lng] exactly without simplification */
 function toLeaflet(geojsonCoords) {
   if (!geojsonCoords?.length) return [];
   return geojsonCoords.map((c) => [c[1], c[0]]);
+}
+
+/** Determine route color based on ranking */
+function getRouteColor(route, routes) {
+  if (route.is_safest) return ROUTE_COLORS.safest;
+  // Find fastest (shortest duration)
+  const sortedByDuration = [...routes].sort((a, b) => (a.duration_s || 0) - (b.duration_s || 0));
+  if (sortedByDuration.length > 0 && route.id === sortedByDuration[0].id) {
+    return ROUTE_COLORS.fastest;
+  }
+  return ROUTE_COLORS.balanced;
 }
 
 export default function MapView({
@@ -80,23 +99,25 @@ export default function MapView({
     (route) => {
       const isSafest = route.is_safest;
       const isSelected = route.id === selectedRoute;
+      const baseColor = getRouteColor(route, routes);
 
       if (isSafest) {
         return {
-          color: SAFEST_COLOR,
+          color: ROUTE_COLORS.safest,
           weight: isSelected ? 8 : 6,
-          opacity: isSelected ? 0.95 : 0.75,
+          opacity: isSelected ? 0.95 : 0.8,
           dashArray: null,
         };
       }
+
       return {
-        color: isSelected ? SELECTED_OTHER_COLOR : OTHER_COLOR,
+        color: isSelected ? baseColor : baseColor,
         weight: isSelected ? 6 : 4,
-        opacity: isSelected ? 0.85 : 0.4,
-        dashArray: "10, 14",
+        opacity: isSelected ? 0.85 : 0.5,
+        dashArray: "8, 12",
       };
     },
-    [selectedRoute]
+    [selectedRoute, routes]
   );
 
   // Sort routes so safest renders on top (last in SVG = on top)
@@ -122,16 +143,19 @@ export default function MapView({
         <MapClickHandler onMapClick={onMapClick} />
         <FitBounds routes={routes} startPoint={startPoint} selectedSchool={selectedSchool} />
 
-        {/* Danger zones – red fog circles */}
+        {/* Danger zones – colored fog circles */}
         {dangerZones.map((dz, i) => (
           <Circle
             key={`dz-${i}`}
             center={[dz.lat, dz.lng]}
             radius={dz.radius || 50}
             pathOptions={{
-              fillColor: dz.level === "high" ? "#EF4444" : "#F59E0B",
-              fillOpacity: 0.15,
-              stroke: false,
+              fillColor: DANGER_COLORS[dz.level] || DANGER_COLORS.medium,
+              fillOpacity: 0.18,
+              stroke: true,
+              color: DANGER_COLORS[dz.level] || DANGER_COLORS.medium,
+              weight: 1,
+              opacity: 0.3,
             }}
           />
         ))}
@@ -168,7 +192,7 @@ export default function MapView({
           </Marker>
         )}
 
-        {/* Route polylines */}
+        {/* Route polylines – rendered exactly as received from ORS */}
         {sortedRoutes.map((r) => (
           <Polyline
             key={r.id}

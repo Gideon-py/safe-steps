@@ -70,6 +70,7 @@ class ORSClient:
             },
             "instructions": False,
             "geometry_simplify": False,
+            "extra_info": ["surface", "waycategory", "waytype"],
         }
         data = await self._post(body, cache_key)
         return data

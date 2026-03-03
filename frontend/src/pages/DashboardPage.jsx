@@ -4,6 +4,7 @@ import api from "@/lib/api";
 import MapView from "@/components/MapView";
 import RoutePanel from "@/components/RoutePanel";
 import EnvironmentWidget from "@/components/EnvironmentWidget";
+import Legend from "@/components/Legend";
 import { Button } from "@/components/ui/button";
 import { Shield, LogOut, User } from "lucide-react";
 import { toast } from "sonner";
@@ -115,6 +116,11 @@ export default function DashboardPage() {
               <LogOut className="h-3.5 w-3.5" />
             </Button>
           </div>
+        </div>
+
+        {/* Map Legend – bottom right, above user info */}
+        <div className="absolute bottom-28 right-4 pointer-events-auto" style={{ zIndex: 15 }}>
+          <Legend />
         </div>
 
         {/* Route panel */}

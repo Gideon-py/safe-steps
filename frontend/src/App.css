@@ -38,14 +38,17 @@
   min-height: 60px;
 }
 
-.route-indicator.safest {
-  background: #10B981;
-}
-.route-indicator.balanced {
-  background: #F59E0B;
-}
-.route-indicator.fastest {
-  background: #64748B;
+/* Safety badge (score circle) */
+.safety-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
 /* Data source badge */

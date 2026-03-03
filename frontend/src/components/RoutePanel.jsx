@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import {
   MapPin, School, Clock, Navigation, AlertTriangle, ChevronDown, ChevronUp,
-  Bookmark, Shield, Zap, Scale, Footprints,
+  Bookmark, Shield, Zap, Scale, Footprints, Car, TriangleAlert,
 } from "lucide-react";
 import { useState, useMemo } from "react";
 
@@ -23,6 +23,13 @@ function haversineJS(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+// Route type colors
+const ROUTE_COLORS = {
+  safest: "#10B981",
+  balanced: "#F59E0B",
+  fastest: "#64748B",
+};
+
 function ScoreBadge({ score }) {
   const bg = score >= 75 ? "bg-emerald-500" : score >= 50 ? "bg-amber-500" : "bg-red-500";
   return (
@@ -32,12 +39,61 @@ function ScoreBadge({ score }) {
   );
 }
 
-function RouteCard({ route, isSelected, onSelect, onSave }) {
+function TrafficBadge({ level }) {
+  if (!level || level === "unknown") return null;
+  const styles = {
+    low: "bg-emerald-50 text-emerald-700",
+    medium: "bg-amber-50 text-amber-700",
+    high: "bg-red-50 text-red-700",
+  };
+  const labels = {
+    low: "Wenig Verkehr",
+    medium: "Maessiger Verkehr",
+    high: "Starker Verkehr",
+  };
+  return (
+    <span className={`inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded ${styles[level] || styles.medium}`}
+          data-testid="traffic-badge">
+      <Car className="h-3 w-3" />
+      {labels[level] || level}
+    </span>
+  );
+}
+
+function getRouteType(route, routes) {
+  if (route.is_safest) return "safest";
+  if (route.via_bridge) return "balanced";
+  const sortedByDuration = [...routes].sort((a, b) => (a.duration_s || 0) - (b.duration_s || 0));
+  if (sortedByDuration.length > 0 && route.id === sortedByDuration[0].id) return "fastest";
+  return "balanced";
+}
+
+function getRouteLabel(route, routes) {
+  if (route.is_safest) return "Sicherste Route";
+  if (route.via_bridge) return "Via Bruecke";
+  const type = getRouteType(route, routes);
+  if (type === "fastest") return "Schnellste Route";
+  return "Alternative";
+}
+
+function getRouteIcon(route, routes) {
+  if (route.is_safest) return <Shield className="h-4 w-4 text-emerald-500" />;
+  if (route.via_bridge) return <Footprints className="h-4 w-4 text-cyan-500" />;
+  const type = getRouteType(route, routes);
+  if (type === "fastest") return <Zap className="h-4 w-4 text-slate-500" />;
+  return <Scale className="h-4 w-4 text-amber-500" />;
+}
+
+function RouteCard({ route, isSelected, onSelect, onSave, allRoutes }) {
   const [expanded, setExpanded] = useState(false);
+  const routeType = getRouteType(route, allRoutes);
   const isSafest = route.is_safest;
 
   const durationMin = route.duration_minutes ?? Math.round((route.duration_s || 0) / 60);
   const distanceM = route.distance_meters ?? route.distance_m ?? 0;
+  const detourPct = route.detour_pct || 0;
+
+  const indicatorColor = ROUTE_COLORS[routeType] || ROUTE_COLORS.balanced;
 
   return (
     <div
@@ -59,25 +115,23 @@ function RouteCard({ route, isSelected, onSelect, onSave }) {
       )}
 
       <div className="flex items-start gap-3">
-        <div className={`route-indicator ${isSafest ? "safest" : "balanced"}`} />
+        <div
+          className="route-indicator"
+          style={{ background: indicatorColor }}
+        />
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-2">
-              {isSafest ? (
-                <Shield className="h-4 w-4 text-emerald-500" />
-              ) : route.via_bridge ? (
-                <Footprints className="h-4 w-4 text-cyan-500" />
-              ) : (
-                <Zap className="h-4 w-4 text-slate-400" />
-              )}
+              {getRouteIcon(route, allRoutes)}
               <span className="font-semibold text-sm text-foreground">
-                {isSafest ? "Sicherste Route" : route.via_bridge ? "Via Bruecke" : "Alternative"}
+                {getRouteLabel(route, allRoutes)}
               </span>
             </div>
             <ScoreBadge score={route.safety_score} />
           </div>
 
-          <div className="flex items-center gap-4 text-xs text-muted-foreground mt-2">
+          {/* Stats row */}
+          <div className="flex items-center gap-3 text-xs text-muted-foreground mt-2 flex-wrap">
             <span className="flex items-center gap-1">
               <Clock className="h-3 w-3" /> {durationMin} Min.
             </span>
@@ -85,6 +139,16 @@ function RouteCard({ route, isSelected, onSelect, onSave }) {
               <Navigation className="h-3 w-3" /> {(distanceM / 1000).toFixed(1)} km
             </span>
             {route.eta && <span className="font-medium text-foreground">ETA {route.eta}</span>}
+          </div>
+
+          {/* Detour + Traffic info */}
+          <div className="flex items-center gap-2 mt-2 flex-wrap">
+            {detourPct > 0 && (
+              <span className="text-[10px] text-muted-foreground bg-slate-100 px-1.5 py-0.5 rounded" data-testid="detour-badge">
+                +{detourPct}% Umweg
+              </span>
+            )}
+            <TrafficBadge level={route.traffic_level} />
           </div>
 
           {/* Risk breakdown */}
@@ -101,10 +165,11 @@ function RouteCard({ route, isSelected, onSelect, onSave }) {
               </button>
               {expanded && (
                 <div className="mt-2 space-y-1.5 slide-up-enter">
-                  <RiskBar label="Verkehr" value={route.risk_details.traffic_risk} />
-                  <RiskBar label="Querungen" value={route.risk_details.crossing_risk} />
-                  <RiskBar label="Zeitfaktor" value={route.risk_details.time_penalty} />
-                  <RiskBar label="Hotspot-Naehe" value={route.risk_details.hotspot_risk} />
+                  <RiskBar label="Strassenrisiko" value={route.risk_details.osm_risk ?? route.risk_details.traffic_risk} color="osm" />
+                  <RiskBar label="Live-Verkehr" value={route.risk_details.traffic_risk} color="traffic" />
+                  <RiskBar label="Querungen" value={route.risk_details.crossing_risk} color="crossing" />
+                  <RiskBar label="Zeitfaktor" value={route.risk_details.time_penalty} color="time" />
+                  <RiskBar label="Vorfaelle" value={route.risk_details.incident_risk ?? 0} color="incident" />
                 </div>
               )}
             </div>
@@ -126,13 +191,13 @@ function RouteCard({ route, isSelected, onSelect, onSave }) {
   );
 }
 
-function RiskBar({ label, value }) {
-  const color = value >= 60 ? "bg-red-400" : value >= 30 ? "bg-amber-400" : "bg-emerald-400";
+function RiskBar({ label, value, color = "default" }) {
+  const barColor = value >= 60 ? "bg-red-400" : value >= 30 ? "bg-amber-400" : "bg-emerald-400";
   return (
     <div className="flex items-center gap-2">
-      <span className="text-[10px] text-muted-foreground w-20 truncate">{label}</span>
+      <span className="text-[10px] text-muted-foreground w-24 truncate">{label}</span>
       <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-        <div className={`h-full rounded-full ${color}`} style={{ width: `${Math.min(100, value)}%` }} />
+        <div className={`h-full rounded-full ${barColor}`} style={{ width: `${Math.min(100, value)}%` }} />
       </div>
       <span className="text-[10px] font-mono text-muted-foreground w-7 text-right">{value}</span>
     </div>
@@ -174,7 +239,7 @@ export default function RoutePanel({
             </div>
           </div>
 
-          {/* School select – sorted by distance */}
+          {/* School select */}
           <div className="space-y-1.5">
             <Label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Schule</Label>
             <Select
@@ -257,6 +322,7 @@ export default function RoutePanel({
                   isSelected={selectedRoute === r.id}
                   onSelect={onSelectRoute}
                   onSave={onSaveRoute}
+                  allRoutes={routes}
                 />
               ))}
 
@@ -266,7 +332,7 @@ export default function RoutePanel({
                   <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">Datenquellen</p>
                   <div className="flex flex-wrap gap-1.5">
                     {Object.entries(dataSources).map(([key, val]) => (
-                      <span key={key} className={`source-badge ${val.includes("live") || val.includes("ORS") || val.includes("Overpass") ? "live" : "demo"}`}>
+                      <span key={key} className={`source-badge ${val.includes("Live") || val.includes("live") || val.includes("ORS") || val.includes("Overpass") ? "live" : "demo"}`}>
                         {key}: {val}
                       </span>
                     ))}

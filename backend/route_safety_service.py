@@ -1,8 +1,15 @@
 """
-Route safety scoring service.
+Route safety scoring service v2.
 
-Scores ORS walking routes using OSM data (via Overpass).
-Implements the weighted cost formula and pedestrian bridge bonus.
+New weighted cost formula:
+  0.35 * time_penalty
+  + 0.25 * osm_risk (road type analysis)
+  + 0.25 * live_traffic (from OTD counters)
+  + 0.10 * crossings
+  + 0.05 * incidents
+
+Routes with >800 Fzg/h on primary/secondary/trunk roads are discarded.
+Detour limits: 20% time, 25% distance.
 """
 
 import logging
@@ -21,18 +28,22 @@ BERN_HOTSPOTS = [
     (46.9460, 7.4400, "Bundesplatz"),
 ]
 
-# Cost formula weights
-W_TIME = 0.4
-W_TRAFFIC = 0.3
-W_CROSSING = 0.2
-W_HOTSPOT = 0.1
+# New cost formula weights (safety-first)
+W_TIME = 0.35
+W_OSM_RISK = 0.25
+W_LIVE_TRAFFIC = 0.25
+W_CROSSING = 0.10
+W_INCIDENTS = 0.05
 
-# Detour limits
-MAX_TIME_FACTOR = 1.15   # 15 %
-MAX_DIST_FACTOR = 1.20   # 20 %
+# Detour limits (more generous to allow safer routes)
+MAX_TIME_FACTOR = 1.20   # 20%
+MAX_DIST_FACTOR = 1.25   # 25%
 
-# Bridge bonus (subtracted from total cost)
-BRIDGE_BONUS = 0.05
+# Bridge bonus
+BRIDGE_BONUS = 0.06
+
+# Traffic discard threshold
+MAX_VEHICLES_PER_HOUR = 800
 
 SAMPLE_INTERVAL_M = 15
 GRID_CELL_DEG = 0.0004  # ~44m at Bern latitude
@@ -41,7 +52,6 @@ GRID_CELL_DEG = 0.0004  # ~44m at Bern latitude
 # ── Geometry helpers ────────────────────────────────────────
 
 def haversine(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
-    """Distance in metres between two points."""
     R = 6_371_000
     p1, p2 = math.radians(lat1), math.radians(lat2)
     dp = math.radians(lat2 - lat1)
@@ -51,11 +61,8 @@ def haversine(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
 
 
 def sample_route(coords: list, interval_m: float = SAMPLE_INTERVAL_M) -> list:
-    """
-    Sample points along a route at regular intervals.
-    coords: list of [lng, lat] (GeoJSON order).
-    Returns list of (lat, lng) tuples.
-    """
+    """Sample points along a route at regular intervals.
+    coords: list of [lng, lat] (GeoJSON order). Returns list of (lat, lng) tuples."""
     if not coords or len(coords) < 2:
         return []
     samples = [(coords[0][1], coords[0][0])]
@@ -67,12 +74,10 @@ def sample_route(coords: list, interval_m: float = SAMPLE_INTERVAL_M) -> list:
         accum += seg_dist
         while accum >= interval_m:
             accum -= interval_m
-            # interpolate
             frac = 1.0 - (accum / seg_dist) if seg_dist > 0 else 1.0
             s_lat = lat1 + (lat2 - lat1) * frac
             s_lng = lon1 + (lon2 - lon1) * frac
             samples.append((s_lat, s_lng))
-    # always include last point
     samples.append((coords[-1][1], coords[-1][0]))
     return samples
 
@@ -88,7 +93,6 @@ def _cell(lat, lon):
 
 
 def build_grid(osm):
-    """Pre-index OSM features in a spatial grid for O(1) lookups."""
     grid = {}
     way_store = {}
 
@@ -111,7 +115,6 @@ def build_grid(osm):
 
 
 def _grid_nearby(pt, grid, way_store):
-    """Retrieve ways / crossings / stations near pt using grid."""
     lat, lng = pt
     c = _cell(lat, lng)
     wids = set()
@@ -129,46 +132,69 @@ def _grid_nearby(pt, grid, way_store):
 
 # ── Scoring ────────────────────────────────────────────────
 
-def _score_sample_fast(pt, ways, crosses, stats):
-    """Return (traffic_add, safe_sub, crossing_ids) for one sample."""
-    traffic = 0.0
+def _score_sample_osm(pt, ways, crosses, stats):
+    """Return (risk_add, safe_sub, crossing_ids, has_major_road) for one sample."""
+    risk = 0.0
     safe = 0.0
     cross_ids = set()
+    has_major_road = False
 
     for w in ways:
         hw = w.get("tags", {}).get("highway", "")
-        if hw in ("trunk", "primary", "secondary"):
-            traffic += 1.0
+        if hw == "trunk":
+            risk += 1.5
+            has_major_road = True
+        elif hw == "primary":
+            risk += 1.2
+            has_major_road = True
+        elif hw == "secondary":
+            risk += 0.8
+            has_major_road = True
         elif hw == "tertiary":
-            traffic += 0.5
-        elif hw in ("footway", "pedestrian", "living_street", "cycleway"):
-            safe += 0.5
+            risk += 0.4
+        elif hw in ("footway", "pedestrian", "living_street"):
+            safe += 0.8
+        elif hw == "cycleway":
+            safe += 0.3
 
     for s in stats:
         tags = s.get("tags", {})
         if tags.get("railway") == "station":
-            traffic += 1.0
+            risk += 1.0
         elif tags.get("amenity") == "bus_station":
-            traffic += 0.5
+            risk += 0.5
 
-    # Deduplicate crossings by position
     for c in crosses:
         cid = f"{c['lat']:.5f},{c['lon']:.5f}"
         cross_ids.add(cid)
 
-    return traffic, safe, cross_ids
+    return risk, safe, cross_ids, has_major_road
 
 
-def hotspot_proximity(samples) -> float:
-    """Average inverse distance to known Bern hotspots (0..1)."""
-    if not samples:
-        return 0.0
-    total = 0.0
-    for lat, lng in samples:
-        min_d = min(haversine(lat, lng, h[0], h[1]) for h in BERN_HOTSPOTS)
-        # 0 at 0 m, ~0 at 500 m+
-        total += max(0.0, 1.0 - min_d / 500.0)
-    return total / len(samples)
+def _check_major_road_traffic(samples, grid, way_store, traffic_data):
+    """Check if route passes through major roads with >800 veh/h. Returns True if should discard."""
+    if not traffic_data or traffic_data.get("vehicles_per_hour", 0) == 0:
+        return False
+
+    vph = traffic_data.get("vehicles_per_hour", 0)
+    major_road_samples = 0
+    total_samples = max(len(samples), 1)
+
+    for pt in samples:
+        ways, _, _ = _grid_nearby(pt, grid, way_store)
+        for w in ways:
+            hw = w.get("tags", {}).get("highway", "")
+            if hw in ("trunk", "primary", "secondary"):
+                major_road_samples += 1
+                break
+
+    major_road_ratio = major_road_samples / total_samples
+
+    # If >40% of route is on major roads AND traffic is above threshold
+    if major_road_ratio > 0.4 and vph > MAX_VEHICLES_PER_HOUR:
+        return True
+
+    return False
 
 
 def score_single_route(
@@ -180,20 +206,18 @@ def score_single_route(
     min_distance: float,
     bridge_bonus: bool = False,
     _grid_data=None,
+    traffic_data=None,
+    incidents=None,
 ) -> Optional[dict]:
-    """
-    Score one route.  Returns None if it exceeds the detour limit.
-    coords: [lng, lat] GeoJSON order.
-    _grid_data: optional pre-built (grid, way_store) tuple for efficiency.
-    """
+    """Score one route. Returns None if it exceeds detour limit or has excessive traffic."""
     # Detour limit check
     if min_duration > 0 and min_distance > 0:
         over_time = duration_s > min_duration * MAX_TIME_FACTOR
         over_dist = distance_m > min_distance * MAX_DIST_FACTOR
         if over_time and over_dist:
-            return None  # discard
+            return None
 
-    # Dynamic sample interval based on route length
+    # Dynamic sample interval
     interval = SAMPLE_INTERVAL_M
     if distance_m > 5000:
         interval = 80
@@ -209,41 +233,70 @@ def score_single_route(
     else:
         grid, way_store = build_grid(osm)
 
-    total_traffic = 0.0
+    # Check if route should be discarded due to heavy traffic on major roads
+    if traffic_data and _check_major_road_traffic(samples, grid, way_store, traffic_data):
+        logger.info("Route discarded: heavy traffic (%d veh/h) on major roads",
+                     traffic_data.get("vehicles_per_hour", 0))
+        return None
+
+    total_risk = 0.0
     total_safe = 0.0
     all_crossings = set()
     danger_zones: list = []
+    major_road_count = 0
 
     for pt in samples:
         ways, crosses, stats = _grid_nearby(pt, grid, way_store)
-        t, s, cids = _score_sample_fast(pt, ways, crosses, stats)
-        total_traffic += t
+        r, s, cids, has_major = _score_sample_osm(pt, ways, crosses, stats)
+        total_risk += r
         total_safe += s
         all_crossings.update(cids)
-        if t >= 1.0:
-            danger_zones.append({"lat": pt[0], "lng": pt[1], "risk": round(t, 1)})
+        if has_major:
+            major_road_count += 1
+        if r >= 1.0:
+            danger_zones.append({"lat": pt[0], "lng": pt[1], "risk": round(r, 1)})
 
-    # Normalize components to 0..1
-    raw_traffic = (total_traffic - total_safe) / n
-    norm_traffic = max(0.0, min(1.0, raw_traffic / 2.0))
+    # === Normalize components to 0..1 ===
 
-    # Unique crossings per km (higher = more risky)
-    route_km = max(0.1, distance_m / 1000)
-    crossings_per_km = len(all_crossings) / route_km
-    norm_crossing = min(1.0, crossings_per_km / 25.0)  # 25 crossings/km = 100%
-
+    # 1. Time penalty (0.35)
     if min_duration > 0:
-        norm_time = max(0.0, min(1.0, (duration_s / min_duration - 1.0) / 0.15))
+        norm_time = max(0.0, min(1.0, (duration_s / min_duration - 1.0) / 0.20))
     else:
         norm_time = 0.5
 
-    norm_hotspot = hotspot_proximity(samples)
+    # 2. OSM road risk (0.25) - adjusted to penalize major roads more
+    raw_osm = (total_risk - total_safe * 0.5) / n
+    norm_osm = max(0.0, min(1.0, raw_osm / 1.5))
 
+    # 3. Live traffic (0.25)
+    if traffic_data and traffic_data.get("vehicles_per_hour", 0) > 0:
+        vph = traffic_data["vehicles_per_hour"]
+        # Normalize: 0 veh/h = 0.0, 800+ veh/h = 1.0
+        norm_traffic = max(0.0, min(1.0, vph / MAX_VEHICLES_PER_HOUR))
+        # Boost if route has many major road segments
+        major_ratio = major_road_count / n
+        norm_traffic = min(1.0, norm_traffic * (1.0 + major_ratio * 0.5))
+        traffic_level = traffic_data.get("level", "unknown")
+    else:
+        norm_traffic = 0.3  # default moderate when no data
+        traffic_level = "unknown"
+
+    # 4. Crossings (0.10)
+    route_km = max(0.1, distance_m / 1000)
+    crossings_per_km = len(all_crossings) / route_km
+    norm_crossing = min(1.0, crossings_per_km / 20.0)
+
+    # 5. Incidents (0.05)
+    incident_count = len(incidents) if incidents else 0
+    norm_incidents = min(1.0, incident_count / 3.0)
+
+    # === Total cost ===
     total_cost = (
         W_TIME * norm_time
-        + W_TRAFFIC * norm_traffic
+        + W_OSM_RISK * norm_osm
+        + W_LIVE_TRAFFIC * norm_traffic
         + W_CROSSING * norm_crossing
-        + W_HOTSPOT * norm_hotspot
+        + W_INCIDENTS * norm_incidents
     )
 
     if bridge_bonus:
@@ -251,24 +304,31 @@ def score_single_route(
 
     safety_pct = max(0, min(100, round(100 * (1.0 - total_cost))))
 
-    # Aggregate danger zones (merge nearby ones)
+    # Merge danger zones
     merged = _merge_danger_zones(danger_zones, merge_radius_m=60)
+
+    # Calculate detour percentage
+    detour_pct = 0
+    if min_duration > 0:
+        detour_pct = round((duration_s / min_duration - 1.0) * 100)
 
     return {
         "total_cost": round(total_cost, 4),
         "safety_score": safety_pct,
         "risk_details": {
             "time_penalty": round(norm_time * 100),
+            "osm_risk": round(norm_osm * 100),
             "traffic_risk": round(norm_traffic * 100),
             "crossing_risk": round(norm_crossing * 100),
-            "hotspot_risk": round(norm_hotspot * 100),
+            "incident_risk": round(norm_incidents * 100),
         },
+        "traffic_level": traffic_level,
+        "detour_pct": max(0, detour_pct),
         "danger_zones": merged,
     }
 
 
 def _merge_danger_zones(zones, merge_radius_m=60):
-    """Merge nearby danger zones into aggregated zones."""
     if not zones:
         return []
     merged = []
@@ -299,14 +359,9 @@ def _merge_danger_zones(zones, merge_radius_m=60):
 # ── Bridge detection ───────────────────────────────────────
 
 def find_bridges_in_corridor(coords: list, osm: dict, corridor_m: float = 100) -> list:
-    """
-    Find pedestrian bridges within `corridor_m` of the route.
-    Returns list of (lat, lng) bridge midpoints.
-    """
     bridges = osm.get("bridges", [])
     if not bridges:
         return []
-
     route_samples = sample_route(coords, interval_m=50)
     found = []
     for br in bridges:
@@ -324,17 +379,17 @@ def find_bridges_in_corridor(coords: list, osm: dict, corridor_m: float = 100) -
 
 # ── Main scoring pipeline ──────────────────────────────────
 
-def score_all_routes(ors_features: list, osm: dict) -> list:
-    """
-    Score a list of ORS GeoJSON features.
-    Returns list of scored route dicts sorted by total_cost (safest first).
-    """
+def score_all_routes(
+    ors_features: list,
+    osm: dict,
+    traffic_data_per_route: list = None,
+    incidents_per_route: list = None,
+) -> list:
+    """Score a list of ORS GeoJSON features with optional traffic data."""
     if not ors_features:
         return []
 
-    # Pre-build spatial grid once for all routes
     grid_data = build_grid(osm)
-
     min_dur = min(f["properties"]["summary"]["duration"] for f in ors_features)
     min_dist = min(f["properties"]["summary"]["distance"] for f in ors_features)
 
@@ -344,9 +399,17 @@ def score_all_routes(ors_features: list, osm: dict) -> list:
         dist = feat["properties"]["summary"]["distance"]
         dur = feat["properties"]["summary"]["duration"]
 
-        result = score_single_route(coords, dist, dur, osm, min_dur, min_dist, _grid_data=grid_data)
+        traffic = traffic_data_per_route[idx] if traffic_data_per_route and idx < len(traffic_data_per_route) else None
+        incidents = incidents_per_route[idx] if incidents_per_route and idx < len(incidents_per_route) else None
+
+        result = score_single_route(
+            coords, dist, dur, osm, min_dur, min_dist,
+            _grid_data=grid_data,
+            traffic_data=traffic,
+            incidents=incidents,
+        )
         if result is None:
-            continue  # exceeds detour limit
+            continue
 
         scored.append({
             "id": f"route_{idx + 1}",
@@ -357,25 +420,37 @@ def score_all_routes(ors_features: list, osm: dict) -> list:
             "total_cost": result["total_cost"],
             "is_safest": False,
             "risk_details": result["risk_details"],
+            "traffic_level": result["traffic_level"],
+            "detour_pct": result["detour_pct"],
             "danger_zones": result["danger_zones"],
         })
 
-    # Sort by total_cost ascending (safest first)
     scored.sort(key=lambda r: r["total_cost"])
     if scored:
         scored[0]["is_safest"] = True
     return scored
 
 
-def score_bridge_route(ors_feature: dict, osm: dict, min_dur: float, min_dist: float) -> Optional[dict]:
-    """Score a single via-bridge route with bridge bonus."""
+def score_bridge_route(
+    ors_feature: dict,
+    osm: dict,
+    min_dur: float,
+    min_dist: float,
+    traffic_data=None,
+    incidents=None,
+) -> Optional[dict]:
     if not ors_feature:
         return None
     coords = ors_feature["geometry"]["coordinates"]
     dist = ors_feature["properties"]["summary"]["distance"]
     dur = ors_feature["properties"]["summary"]["duration"]
 
-    result = score_single_route(coords, dist, dur, osm, min_dur, min_dist, bridge_bonus=True)
+    result = score_single_route(
+        coords, dist, dur, osm, min_dur, min_dist,
+        bridge_bonus=True,
+        traffic_data=traffic_data,
+        incidents=incidents,
+    )
     if result is None:
         return None
 
@@ -388,6 +463,8 @@ def score_bridge_route(ors_feature: dict, osm: dict, min_dur: float, min_dist: f
         "total_cost": result["total_cost"],
         "is_safest": False,
         "risk_details": result["risk_details"],
+        "traffic_level": result["traffic_level"],
+        "detour_pct": result["detour_pct"],
         "danger_zones": result["danger_zones"],
         "via_bridge": True,
     }
