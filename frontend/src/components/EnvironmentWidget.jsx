@@ -1,5 +1,5 @@
 import {
-  Cloud, Droplets, Wind, Thermometer, AlertTriangle, CheckCircle, Waves,
+  Cloud, Wind, Thermometer, AlertTriangle, CheckCircle, Waves,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -9,10 +9,6 @@ function DangerBadge({ level }) {
   return <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded"><CheckCircle className="h-3 w-3" />OK</span>;
 }
 
-
-function SourceTag({ source }) {
-  return <span className={`source-badge ${source === "live" ? "live" : "demo"}`}>{source === "live" ? "Live" : "Demo"}</span>;
-}
 
 export default function EnvironmentWidget({ data }) {
   const [expanded, setExpanded] = useState(false);
@@ -68,17 +64,13 @@ export default function EnvironmentWidget({ data }) {
         <div className="px-4 pb-4 space-y-3 border-t border-slate-100 pt-3 slide-up-enter">
           {/* Weather */}
           <div>
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
-                <Cloud className="h-3.5 w-3.5 text-sky-500" /> Wetter
-              </span>
-              <SourceTag source={data.weather?.source} />
-            </div>
+            <p className="text-xs font-semibold text-foreground flex items-center gap-1.5 mb-1">
+              <Cloud className="h-3.5 w-3.5 text-sky-500" /> Wetter
+            </p>
             <p className="text-xs text-muted-foreground capitalize">{weather.description || "-"}</p>
             <div className="flex gap-3 mt-1 text-xs text-muted-foreground">
               <span className="flex items-center gap-1"><Thermometer className="h-3 w-3" /> {weather.temp?.toFixed(1)}&deg;C</span>
               <span className="flex items-center gap-1"><Wind className="h-3 w-3" /> {weather.wind_speed?.toFixed(1)} m/s</span>
-              <span className="flex items-center gap-1"><Droplets className="h-3 w-3" /> {weather.humidity}%</span>
             </div>
           </div>
 
@@ -88,15 +80,9 @@ export default function EnvironmentWidget({ data }) {
               <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
                 <Waves className="h-3.5 w-3.5 text-cyan-500" /> Aare
               </span>
-              <div className="flex items-center gap-1.5">
-                <DangerBadge level={aare.danger_level} />
-                <SourceTag source={data.aare?.source} />
-              </div>
+              <DangerBadge level={aare.danger_level} />
             </div>
-            <div className="flex gap-3 text-xs text-muted-foreground">
-              <span>Temp: {aare.temperature}&deg;C</span>
-              <span>Abfluss: {aare.flow} m&sup3;/s</span>
-            </div>
+            <p className="text-xs text-muted-foreground">Temp: {aare.temperature}&deg;C</p>
             <p className="text-xs text-muted-foreground mt-0.5">{aare.danger_text}</p>
           </div>
 
@@ -106,10 +92,7 @@ export default function EnvironmentWidget({ data }) {
               <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
                 <AlertTriangle className="h-3.5 w-3.5 text-amber-500" /> Hochwasser
               </span>
-              <div className="flex items-center gap-1.5">
-                <DangerBadge level={data.flood?.data?.warning_active ? "high" : "low"} />
-                <SourceTag source={data.flood?.source} />
-              </div>
+              <DangerBadge level={data.flood?.data?.warning_active ? "high" : "low"} />
             </div>
           </div>
         </div>

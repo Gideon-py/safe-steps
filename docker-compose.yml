@@ -3,11 +3,18 @@ services:
     image: mongo:7
     volumes:
       - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
   backend:
     build: ./backend
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy
     environment:
       - MONGO_URL=mongodb://mongodb:27017
       - DB_NAME=safesteps
@@ -18,11 +25,20 @@ services:
       - OTD_API_KEY=eyJvcmciOiI2NDA2NTFhNTIyZmEwNTAwMDEyOWJiZTEiLCJpZCI6IjM3ZTQwY2UzYWNmYTQ1MWJhNWRmZDUzNGFjYjQwNDJjIiwiaCI6Im11cm11cjEyOCJ9
     ports:
       - "8001:8001"
+    volumes:
+      - backend_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/api/schools')"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   frontend:
     build: ./frontend
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     environment:
       - REACT_APP_BACKEND_URL=http://localhost:8001
     ports:
@@ -30,3 +46,4 @@ services:
 
 volumes:
   mongo_data:
+  backend_logs:

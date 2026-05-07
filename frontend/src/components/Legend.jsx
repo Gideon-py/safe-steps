@@ -57,7 +57,7 @@ function DotIcon({ color }) {
 }
 
 export default function Legend() {
-  const [collapsed, setCollapsed] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <div
@@ -67,20 +67,20 @@ export default function Legend() {
     >
       <button
         className="w-full flex items-center justify-between px-3 py-2 hover:bg-slate-50/50 transition-colors"
-        onClick={() => setCollapsed(!collapsed)}
+        onClick={() => setOpen(!open)}
         data-testid="legend-toggle"
       >
         <span className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">
           Legende
         </span>
-        {collapsed ? (
-          <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
-        ) : (
+        {open ? (
           <ChevronUp className="h-3.5 w-3.5 text-muted-foreground" />
+        ) : (
+          <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
         )}
       </button>
 
-      {!collapsed && (
+      {open && (
         <div className="px-3 pb-3 space-y-2.5 slide-up-enter">
           {LEGEND_ITEMS.map((group) => (
             <div key={group.category}>

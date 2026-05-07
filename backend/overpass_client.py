@@ -8,6 +8,8 @@ import hashlib
 import urllib.parse
 from typing import List
 
+from route_safety_service import haversine
+
 import httpx
 
 logger = logging.getLogger(__name__)
@@ -213,7 +215,22 @@ out body geom;"""
                 "address": address,
                 "type": "Kindergarten" if amenity == "kindergarten" else "Primarschule",
             })
-        return schools
+
+        unique_schools = []
+        for school in schools:
+            is_duplicate = False
+            for unique in unique_schools:
+                if school["name"] == unique["name"]:
+                    dist = haversine(school["lat"], school["lng"],
+                                     unique["lat"], unique["lng"])
+                    if dist < 50:
+                        is_duplicate = True
+                        if len(school["address"]) > len(unique["address"]):
+                            unique["address"] = school["address"]
+                        break
+            if not is_duplicate:
+                unique_schools.append(school)
+        return unique_schools
 
     @staticmethod
     def _empty() -> dict:
