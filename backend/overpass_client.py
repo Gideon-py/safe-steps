@@ -220,14 +220,13 @@ out body geom;"""
         for school in schools:
             is_duplicate = False
             for unique in unique_schools:
-                if school["name"] == unique["name"]:
-                    dist = haversine(school["lat"], school["lng"],
-                                     unique["lat"], unique["lng"])
-                    if dist < 50:
-                        is_duplicate = True
-                        if len(school["address"]) > len(unique["address"]):
-                            unique["address"] = school["address"]
-                        break
+                dist = haversine(school["lat"], school["lng"],
+                                 unique["lat"], unique["lng"])
+                if school["name"] == unique["name"] or dist < 80:
+                    is_duplicate = True
+                    if len(school["address"]) > len(unique["address"]):
+                        unique["address"] = school["address"]
+                    break
             if not is_duplicate:
                 unique_schools.append(school)
         return unique_schools
