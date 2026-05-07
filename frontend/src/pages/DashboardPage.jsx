@@ -98,7 +98,7 @@ export default function DashboardPage() {
         <div className="absolute top-4 left-4 pointer-events-auto flex items-center gap-3">
           <div className="glass-panel rounded-xl px-4 py-2.5 flex items-center gap-2.5">
             <Shield className="h-5 w-5 text-primary" />
-            <span className="font-bold font-['Barlow'] text-sm tracking-tight text-foreground">SafeWay Bern</span>
+            <span className="font-bold font-['Barlow'] text-sm tracking-tight text-foreground">SafeSteps Bern</span>
           </div>
         </div>
 
@@ -140,6 +140,7 @@ export default function DashboardPage() {
             onSaveRoute={saveRoute}
             dataSources={dataSources}
             routingSource={routingSource}
+            onStartPointChange={handleMapClick}
           />
         </div>
 
@@ -147,7 +148,7 @@ export default function DashboardPage() {
         {!startPoint && (
           <div className="map-hint">
             <div className="glass-panel rounded-full px-5 py-2.5 text-sm font-medium text-foreground">
-              Klicke auf die Karte, um deinen Startpunkt zu setzen
+              Adresse eingeben oder auf die Karte klicken
             </div>
           </div>
         )}

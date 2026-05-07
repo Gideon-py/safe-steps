@@ -11,7 +11,7 @@ export const useAuth = () => useContext(AuthContext);
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("safeway_token"));
+  const [token, setToken] = useState(localStorage.getItem("safesteps_token"));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function AuthProvider({ children }) {
       api.getMe(token)
         .then((u) => setUser(u))
         .catch(() => {
-          localStorage.removeItem("safeway_token");
+          localStorage.removeItem("safesteps_token");
           setToken(null);
         })
         .finally(() => setLoading(false));
@@ -29,13 +29,13 @@ function AuthProvider({ children }) {
   }, [token]);
 
   const login = (tkn, usr) => {
-    localStorage.setItem("safeway_token", tkn);
+    localStorage.setItem("safesteps_token", tkn);
     setToken(tkn);
     setUser(usr);
   };
 
   const logout = () => {
-    localStorage.removeItem("safeway_token");
+    localStorage.removeItem("safesteps_token");
     setToken(null);
     setUser(null);
   };

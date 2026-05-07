@@ -1,5 +1,5 @@
 """
-Comprehensive backend API testing for SafeWay Bern app.
+Comprehensive backend API testing for SafeSteps Bern app.
 Tests all endpoints including new ORS-based routing system.
 """
 
@@ -10,7 +10,7 @@ import time
 from datetime import datetime
 from typing import Dict, Any, Optional
 
-class SafeWayAPITester:
+class SafeStepsAPITester:
     def __init__(self, base_url="https://safesteps-bern.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
@@ -82,7 +82,7 @@ class SafeWayAPITester:
     def test_auth_register(self) -> bool:
         """Test user registration"""
         timestamp = datetime.now().strftime("%H%M%S")
-        test_email = f"testuser_{timestamp}@safeway.ch"
+        test_email = f"testuser_{timestamp}@safesteps.ch"
         test_password = "TestPass123!"
         test_name = f"TestUser_{timestamp}"
         
@@ -107,7 +107,7 @@ class SafeWayAPITester:
             "POST",
             "auth/login", 
             200,
-            {"email": "test2@safeway.ch", "password": "test123"}
+            {"email": "test2@safesteps.ch", "password": "test123"}
         )
         
         if success and 'token' in response:
@@ -388,7 +388,7 @@ class SafeWayAPITester:
     
     def run_all_tests(self) -> dict:
         """Run comprehensive test suite"""
-        print("🚀 Starting SafeWay Bern API Testing...")
+        print("🚀 Starting SafeSteps Bern API Testing...")
         print(f"Testing against: {self.base_url}")
         print("=" * 60)
         
@@ -442,7 +442,7 @@ class SafeWayAPITester:
 
 def main():
     """Main test execution"""
-    tester = SafeWayAPITester("https://safesteps-bern.preview.emergentagent.com")
+    tester = SafeStepsAPITester("https://safesteps-bern.preview.emergentagent.com")
     results = tester.run_all_tests()
     
     # Return appropriate exit code

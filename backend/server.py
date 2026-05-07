@@ -34,7 +34,7 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 # JWT
-JWT_SECRET = os.environ.get('JWT_SECRET', 'safeway_default_secret')
+JWT_SECRET = os.environ.get('JWT_SECRET', 'safesteps_default_secret')
 JWT_ALG = "HS256"
 security = HTTPBearer()
 

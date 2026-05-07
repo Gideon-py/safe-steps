@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import {
   MapPin, School, Clock, Navigation, AlertTriangle, ChevronDown, ChevronUp,
-  Bookmark, Shield, Zap, Scale, Footprints, Car, TriangleAlert,
+  Bookmark, Shield, Zap, Scale, Footprints, Car, TriangleAlert, Search,
 } from "lucide-react";
 import { useState, useMemo } from "react";
 
@@ -207,8 +207,34 @@ function RiskBar({ label, value, color = "default" }) {
 export default function RoutePanel({
   startPoint, selectedSchool, schools, departureTime, onDepartureTimeChange,
   onSchoolSelect, onCalculate, calculating, routes, selectedRoute, onSelectRoute,
-  onSaveRoute, dataSources, routingSource,
+  onSaveRoute, dataSources, routingSource, onStartPointChange,
 }) {
+  const [addressQuery, setAddressQuery] = useState("");
+  const [geocoding, setGeocoding] = useState(false);
+  const [geocodeError, setGeocodeError] = useState("");
+
+  const handleGeocode = async (e) => {
+    e.preventDefault();
+    if (!addressQuery.trim()) return;
+    setGeocoding(true);
+    setGeocodeError("");
+    try {
+      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(addressQuery)}&format=json&limit=1&countrycodes=ch`;
+      const resp = await fetch(url, { headers: { "Accept-Language": "de" } });
+      const data = await resp.json();
+      if (!data.length) {
+        setGeocodeError("Adresse nicht gefunden");
+        return;
+      }
+      onStartPointChange({ lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) });
+      setGeocodeError("");
+    } catch {
+      setGeocodeError("Geocoding fehlgeschlagen");
+    } finally {
+      setGeocoding(false);
+    }
+  };
+
   // Sort schools by distance to startPoint
   const sortedSchools = useMemo(() => {
     if (!startPoint || !schools.length) return schools;
@@ -226,17 +252,38 @@ export default function RoutePanel({
         <div className="space-y-4">
           <h2 className="font-bold font-['Barlow'] text-lg text-foreground tracking-tight">Route planen</h2>
 
-          {/* Start point */}
+          {/* Start point – address search */}
           <div className="space-y-1.5">
             <Label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Startpunkt</Label>
-            <div className="flex items-center gap-2 rounded-lg bg-secondary/50 px-3 py-2.5">
-              <MapPin className="h-4 w-4 text-emerald-500 flex-shrink-0" />
-              <span className="text-sm text-foreground truncate" data-testid="start-point-display">
-                {startPoint
-                  ? `${startPoint.lat.toFixed(4)}, ${startPoint.lng.toFixed(4)}`
-                  : "Auf Karte klicken..."}
-              </span>
-            </div>
+            <form onSubmit={handleGeocode} className="flex gap-2">
+              <Input
+                value={addressQuery}
+                onChange={(e) => setAddressQuery(e.target.value)}
+                placeholder="Ihre Adresse in Bern eingeben..."
+                data-testid="address-search-input"
+              />
+              <Button
+                type="submit"
+                size="icon"
+                disabled={!addressQuery.trim() || geocoding}
+                data-testid="address-search-btn"
+              >
+                {geocoding
+                  ? <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+                  : <Search className="h-4 w-4" />}
+              </Button>
+            </form>
+            {startPoint && (
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <MapPin className="h-3 w-3 text-emerald-500 flex-shrink-0" />
+                <span data-testid="start-point-display">
+                  {startPoint.lat.toFixed(5)}, {startPoint.lng.toFixed(5)}
+                </span>
+              </div>
+            )}
+            {geocodeError && (
+              <p className="text-xs text-red-500">{geocodeError}</p>
+            )}
           </div>
 
           {/* School select */}

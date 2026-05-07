@@ -101,7 +101,7 @@ class AareProvider:
 
     async def get_data(self) -> dict:
         try:
-            url = "https://aareguru.ch/v2018/current?city=bern&app=SafeWayBern&version=1.0"
+            url = "https://aareguru.ch/v2018/current?city=bern&app=SafeStepsBern&version=1.0"
             async with httpx.AsyncClient(timeout=10.0) as client:
                 resp = await client.get(url)
                 if resp.status_code == 200:

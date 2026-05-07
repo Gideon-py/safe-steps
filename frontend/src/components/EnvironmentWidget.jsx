@@ -1,5 +1,5 @@
 import {
-  Cloud, Droplets, Wind, Thermometer, AlertTriangle, CheckCircle, Waves, Gauge,
+  Cloud, Droplets, Wind, Thermometer, AlertTriangle, CheckCircle, Waves,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -9,10 +9,6 @@ function DangerBadge({ level }) {
   return <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded"><CheckCircle className="h-3 w-3" />OK</span>;
 }
 
-function AqiBadge({ aqi, label }) {
-  const colors = { 1: "text-emerald-600 bg-emerald-50", 2: "text-emerald-600 bg-emerald-50", 3: "text-amber-600 bg-amber-50", 4: "text-red-600 bg-red-50", 5: "text-red-600 bg-red-50" };
-  return <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${colors[aqi] || colors[1]}`}>{label}</span>;
-}
 
 function SourceTag({ source }) {
   return <span className={`source-badge ${source === "live" ? "live" : "demo"}`}>{source === "live" ? "Live" : "Demo"}</span>;
@@ -31,7 +27,6 @@ export default function EnvironmentWidget({ data }) {
 
   const weather = data.weather?.data || {};
   const aare = data.aare?.data || {};
-  const air = data.air_quality?.data || {};
   const warningLevel = data.warning_level || "ok";
   const warnings = data.warnings || [];
 
@@ -64,10 +59,6 @@ export default function EnvironmentWidget({ data }) {
           <div className="flex items-center gap-1.5">
             <Waves className="h-3.5 w-3.5 text-cyan-500" />
             <span className="text-sm font-semibold text-foreground">{Math.round(aare.temperature || 0)}&deg;C</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Gauge className="h-3.5 w-3.5 text-violet-500" />
-            <span className="text-sm font-semibold text-foreground">AQI {air.aqi || "-"}</span>
           </div>
         </div>
       </button>
@@ -107,23 +98,6 @@ export default function EnvironmentWidget({ data }) {
               <span>Abfluss: {aare.flow} m&sup3;/s</span>
             </div>
             <p className="text-xs text-muted-foreground mt-0.5">{aare.danger_text}</p>
-          </div>
-
-          {/* Air Quality */}
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
-                <Gauge className="h-3.5 w-3.5 text-violet-500" /> Luftqualitaet
-              </span>
-              <div className="flex items-center gap-1.5">
-                <AqiBadge aqi={air.aqi} label={air.aqi_label} />
-                <SourceTag source={data.air_quality?.source} />
-              </div>
-            </div>
-            <div className="flex gap-3 text-xs text-muted-foreground">
-              <span>PM2.5: {air.pm25?.toFixed(1)}</span>
-              <span>PM10: {air.pm10?.toFixed(1)}</span>
-            </div>
           </div>
 
           {/* Flood */}
