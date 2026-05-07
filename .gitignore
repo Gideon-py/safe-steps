@@ -85,3 +85,5 @@ android-sdk/ frontend/node_modules/.cache/default-development/0.pack
 memory/
 test_reports/
 800
+backend/.env 
+frontend/.env 
