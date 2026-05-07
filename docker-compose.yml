@@ -1,0 +1,32 @@
+services:
+  mongodb:
+    image: mongo:7
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./backend
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017
+      - DB_NAME=safesteps
+      - CORS_ORIGINS=http://localhost:3000
+      - JWT_SECRET=safeway_bern_jwt_secret_key_2024
+      - ORS_API_KEY=eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjMwOTAxYzhhODhkMzQ4NjJhMDk2MzdlMjk0ZWEwOWIyIiwiaCI6Im11cm11cjY0In0=
+      - OPENWEATHERMAP_API_KEY=30637910de1f3aae8ababce9c4a5104b
+      - OTD_API_KEY=eyJvcmciOiI2NDA2NTFhNTIyZmEwNTAwMDEyOWJiZTEiLCJpZCI6IjM3ZTQwY2UzYWNmYTQ1MWJhNWRmZDUzNGFjYjQwNDJjIiwiaCI6Im11cm11cjEyOCJ9
+    ports:
+      - "8001:8001"
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8001
+    ports:
+      - "3000:80"
+
+volumes:
+  mongo_data:

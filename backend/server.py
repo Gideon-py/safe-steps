@@ -14,7 +14,6 @@ from pathlib import Path
 from pydantic import BaseModel
 from typing import Dict, Any
 
-from schools_data import BERN_SCHOOLS
 from providers import (
     WeatherProvider, AirQualityProvider, AareProvider,
     FloodProvider, TrafficProvider,
@@ -137,7 +136,7 @@ async def get_me(user=Depends(get_current_user)):
 
 @api_router.get("/schools")
 async def get_schools():
-    return BERN_SCHOOLS
+    return await overpass.get_schools()
 
 # ──────────── Environment ────────────
 
@@ -275,7 +274,8 @@ async def route_safest(data: RouteInput):
 @api_router.post("/routes/calculate")
 async def calculate_routes(data: RouteBySchool):
     """Legacy endpoint: resolve school_id → coordinates, then compute."""
-    school = next((s for s in BERN_SCHOOLS if s["id"] == data.school_id), None)
+    schools = await overpass.get_schools()
+    school = next((s for s in schools if s["id"] == data.school_id), None)
     if not school:
         raise HTTPException(404, "School not found")
 
@@ -354,6 +354,21 @@ app.add_middleware(
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+@app.on_event("startup")
+async def create_demo_user():
+    existing = await db.users.find_one({"email": "demo@safesteps.ch"})
+    if not existing:
+        uid = str(uuid.uuid4())
+        doc = {
+            "id": uid,
+            "email": "demo@safesteps.ch",
+            "name": "Demo User",
+            "password_hash": hash_pw("demo1234"),
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        }
+        await db.users.insert_one(doc)
+        logger.info("Demo user created")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

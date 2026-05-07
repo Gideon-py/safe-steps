@@ -31,7 +31,8 @@ dist/
 dist
 
 # Environment files (comprehensive coverage)
-
+backend/.env
+frontend/.env
 *token.json*
 *credentials.json*
 
@@ -78,3 +79,9 @@ agenthub/agents/youtube/db
 
 # Mobile development
 android-sdk/ frontend/node_modules/.cache/default-development/0.pack
+
+# Emergent / project-specific cleanup
+.emergent/
+memory/
+test_reports/
+800

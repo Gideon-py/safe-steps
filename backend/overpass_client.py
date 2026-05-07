@@ -5,6 +5,7 @@ import math
 import os
 import time
 import hashlib
+import urllib.parse
 from typing import List
 
 import httpx
@@ -34,11 +35,59 @@ class _OverpassCache:
         self._store[hashlib.md5(key.encode()).hexdigest()] = (value, time.time())
 
 
+SCHOOLS_BBOX = "46.92,7.38,46.97,7.49"
+SCHOOLS_CACHE_KEY = "schools_bern_bbox"
+
+
 class OverpassClient:
     """Fetch OSM features (roads, crossings, bridges, stations) in a bounding box."""
 
     def __init__(self):
         self.cache = _OverpassCache(ttl=1800)  # 30 min
+        self.schools_cache = _OverpassCache(ttl=86400)  # 24h
+
+    async def get_schools(self) -> list:
+        """Return schools and kindergartens in the Bern bounding box from OSM."""
+        cached = self.schools_cache.get(SCHOOLS_CACHE_KEY)
+        if cached is not None:
+            logger.info("Schools cache hit")
+            return cached
+
+        query = (
+            '[out:json][timeout:25];'
+            '('
+            f'node["amenity"="kindergarten"]({SCHOOLS_BBOX});'
+            f'way["amenity"="kindergarten"]({SCHOOLS_BBOX});'
+            f'node["amenity"="school"]["isced:level"~"1"]({SCHOOLS_BBOX});'
+            f'way["amenity"="school"]["isced:level"~"1"]({SCHOOLS_BBOX});'
+            f'node["amenity"="school"]["operator"="Stadt Bern"]({SCHOOLS_BBOX});'
+            f'way["amenity"="school"]["operator"="Stadt Bern"]({SCHOOLS_BBOX});'
+            ');'
+            'out center;'
+        )
+        encoded = urllib.parse.urlencode({"data": query})
+        try:
+            async with httpx.AsyncClient(timeout=30.0) as c:
+                resp = await c.post(
+                    OVERPASS_URL,
+                    content=encoded.encode("utf-8"),
+                    headers={
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "Accept": "*/*",
+                        "User-Agent": "curl/7.68.0",
+                    },
+                )
+                if resp.status_code != 200:
+                    logger.warning("Overpass schools returned %s", resp.status_code)
+                    return []
+                raw = resp.json()
+        except Exception as e:
+            logger.warning("Overpass schools query failed: %s", e)
+            return []
+
+        schools = self._parse_schools(raw.get("elements", []))
+        self.schools_cache.put(SCHOOLS_CACHE_KEY, schools)
+        return schools
 
     async def get_features(self, coords: list) -> dict:
         """
@@ -132,6 +181,39 @@ out body geom;"""
             "bridges": bridges,
             "stations": stations,
         }
+
+    @staticmethod
+    def _parse_schools(elements: list) -> list:
+        schools = []
+        for el in elements:
+            tags = el.get("tags", {})
+            amenity = tags.get("amenity", "")
+            if amenity not in ("school", "kindergarten"):
+                continue
+
+            el_type = el["type"]
+            if el_type == "node":
+                lat, lng = el.get("lat"), el.get("lon")
+            else:
+                center = el.get("center", {})
+                lat, lng = center.get("lat"), center.get("lon")
+
+            if lat is None or lng is None:
+                continue
+
+            street = tags.get("addr:street", "")
+            housenumber = tags.get("addr:housenumber", "")
+            address = f"{street} {housenumber}".strip() if street else ""
+
+            schools.append({
+                "id": f"osm_{el_type}_{el['id']}",
+                "name": tags.get("name", "Unbekannte Schule"),
+                "lat": lat,
+                "lng": lng,
+                "address": address,
+                "type": "Kindergarten" if amenity == "kindergarten" else "Primarschule",
+            })
+        return schools
 
     @staticmethod
     def _empty() -> dict:
