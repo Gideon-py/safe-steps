@@ -357,18 +357,27 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
 async def create_demo_user():
-    existing = await db.users.find_one({"email": "demo@safesteps.ch"})
-    if not existing:
-        uid = str(uuid.uuid4())
-        doc = {
-            "id": uid,
-            "email": "demo@safesteps.ch",
-            "name": "Demo User",
-            "password_hash": hash_pw("demo1234"),
-            "created_at": datetime.now(timezone.utc).isoformat(),
-        }
-        await db.users.insert_one(doc)
-        logger.info("Demo user created")
+    import asyncio
+    max_retries = 10
+    for attempt in range(max_retries):
+        try:
+            existing = await db.users.find_one({"email": "demo@safesteps.ch"})
+            if not existing:
+                uid = str(uuid.uuid4())
+                doc = {
+                    "id": uid,
+                    "email": "demo@safesteps.ch",
+                    "name": "Demo User",
+                    "password_hash": hash_pw("demo1234"),
+                    "created_at": datetime.now(timezone.utc).isoformat(),
+                }
+                await db.users.insert_one(doc)
+                logger.info("Demo user created")
+            return
+        except Exception as e:
+            logger.warning(f"Demo user creation attempt {attempt+1} failed: {e}")
+            await asyncio.sleep(3)
+    logger.error("Could not create demo user after all retries")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
