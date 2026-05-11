@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, APIRouter, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
@@ -50,7 +51,36 @@ ors = ORSClient()
 overpass = OverpassClient()
 otd = OTDClient()
 
-app = FastAPI()
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    import asyncio
+    for attempt in range(10):
+        try:
+            existing = await db.users.find_one({"email": "demo@safesteps.ch"})
+            if not existing:
+                uid = str(uuid.uuid4())
+                await db.users.insert_one({
+                    "id": uid,
+                    "email": "demo@safesteps.ch",
+                    "name": "Demo User",
+                    "password_hash": hash_pw("demo1234"),
+                    "created_at": datetime.now(timezone.utc).isoformat(),
+                })
+                logger.info("Demo user created")
+            break
+        except Exception as e:
+            logger.warning(f"Demo user attempt {attempt+1} failed: {e}")
+            await asyncio.sleep(3)
+    else:
+        logger.error("Could not create demo user after all retries")
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 api_router = APIRouter(prefix="/api")
 
 # ──────────── Models ────────────
@@ -352,33 +382,3 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
-@app.on_event("startup")
-async def create_demo_user():
-    import asyncio
-    max_retries = 10
-    for attempt in range(max_retries):
-        try:
-            existing = await db.users.find_one({"email": "demo@safesteps.ch"})
-            if not existing:
-                uid = str(uuid.uuid4())
-                doc = {
-                    "id": uid,
-                    "email": "demo@safesteps.ch",
-                    "name": "Demo User",
-                    "password_hash": hash_pw("demo1234"),
-                    "created_at": datetime.now(timezone.utc).isoformat(),
-                }
-                await db.users.insert_one(doc)
-                logger.info("Demo user created")
-            return
-        except Exception as e:
-            logger.warning(f"Demo user creation attempt {attempt+1} failed: {e}")
-            await asyncio.sleep(3)
-    logger.error("Could not create demo user after all retries")
-
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
