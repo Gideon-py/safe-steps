@@ -1,0 +1,20 @@
+import requests, json, sys
+
+query = """[out:json][timeout:25];
+(
+  node["amenity"="kindergarten"](46.92,7.38,46.97,7.49);
+  way["amenity"="kindergarten"](46.92,7.38,46.97,7.49);
+  node["amenity"="school"]["isced:level"~"1"](46.92,7.38,46.97,7.49);
+  way["amenity"="school"]["isced:level"~"1"](46.92,7.38,46.97,7.49);
+  node["amenity"="school"]["operator"="Stadt Bern"](46.92,7.38,46.97,7.49);
+  way["amenity"="school"]["operator"="Stadt Bern"](46.92,7.38,46.97,7.49);
+);
+out center;"""
+
+resp = requests.post(
+    "https://overpass-api.de/api/interpreter",
+    data={"data": query},
+    headers={"User-Agent": "curl/7.68.0"},
+    timeout=30
+)
+print(json.dumps(resp.json()))
