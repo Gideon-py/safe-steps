@@ -26,6 +26,9 @@ from route_safety_service import (
     score_all_routes, score_bridge_route, find_bridges_in_corridor, haversine,
 )
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
@@ -50,9 +53,6 @@ traffic_prov = TrafficProvider()
 ors = ORSClient()
 overpass = OverpassClient()
 otd = OTDClient()
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
