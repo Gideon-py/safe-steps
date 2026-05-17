@@ -35,7 +35,10 @@ services:
       start_period: 30s
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        - REACT_APP_BACKEND_URL=http://localhost:8001
     depends_on:
       backend:
         condition: service_healthy
