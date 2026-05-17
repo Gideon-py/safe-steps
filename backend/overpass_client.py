@@ -5,7 +5,9 @@ import math
 import os
 import time
 import hashlib
-import requests
+import urllib.request
+import urllib.parse
+import json
 from typing import List
 
 from route_safety_service import haversine
@@ -50,14 +52,17 @@ class OverpassClient:
 
     @staticmethod
     def _fetch_schools_sync(query: str) -> dict:
-        resp = requests.post(
-            OVERPASS_URL,
-            data={"data": query},
-            headers={"User-Agent": "curl/7.68.0"},
-            timeout=30,
+        data = urllib.parse.urlencode({"data": query}).encode("utf-8")
+        req = urllib.request.Request(
+            "https://overpass-api.de/api/interpreter",
+            data=data,
+            method="POST",
         )
-        resp.raise_for_status()
-        return resp.json()
+        req.add_header("User-Agent", "curl/7.68.0")
+        req.add_header("Accept", "*/*")
+        req.add_header("Content-Type", "application/x-www-form-urlencoded")
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return json.loads(resp.read().decode("utf-8"))
 
     async def get_schools(self) -> list:
         """Return schools and kindergartens in the Bern bounding box from OSM."""
