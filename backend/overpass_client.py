@@ -5,7 +5,7 @@ import math
 import os
 import time
 import hashlib
-import urllib.parse
+import requests
 from typing import List
 
 from route_safety_service import haversine
@@ -48,6 +48,17 @@ class OverpassClient:
         self.cache = _OverpassCache(ttl=1800)  # 30 min
         self.schools_cache = _OverpassCache(ttl=86400)  # 24h
 
+    @staticmethod
+    def _fetch_schools_sync(query: str) -> dict:
+        resp = requests.post(
+            OVERPASS_URL,
+            data={"data": query},
+            headers={"User-Agent": "curl/7.68.0"},
+            timeout=30,
+        )
+        resp.raise_for_status()
+        return resp.json()
+
     async def get_schools(self) -> list:
         """Return schools and kindergartens in the Bern bounding box from OSM."""
         cached = self.schools_cache.get(SCHOOLS_CACHE_KEY)
@@ -67,29 +78,16 @@ class OverpassClient:
             ');'
             'out center;'
         )
-        encoded = urllib.parse.urlencode({"data": query})
         try:
-            async with httpx.AsyncClient(timeout=30.0) as c:
-                resp = await c.post(
-                    OVERPASS_URL,
-                    content=encoded.encode("utf-8"),
-                    headers={
-                        "Content-Type": "application/x-www-form-urlencoded",
-                        "Accept": "*/*",
-                        "User-Agent": "curl/7.68.0",
-                    },
-                )
-                if resp.status_code != 200:
-                    logger.warning("Overpass schools returned %s", resp.status_code)
-                    return []
-                raw = resp.json()
+            import asyncio
+            loop = asyncio.get_event_loop()
+            raw = await loop.run_in_executor(None, self._fetch_schools_sync, query)
+            schools = self._parse_schools(raw.get("elements", []))
+            self.schools_cache.put(SCHOOLS_CACHE_KEY, schools)
+            return schools
         except Exception as e:
             logger.warning("Overpass schools query failed: %s", e)
             return []
-
-        schools = self._parse_schools(raw.get("elements", []))
-        self.schools_cache.put(SCHOOLS_CACHE_KEY, schools)
-        return schools
 
     async def get_features(self, coords: list) -> dict:
         """
