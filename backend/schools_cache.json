@@ -1,2248 +1,730 @@
-{
-  "version": 0.6,
-  "generator": "Overpass API 0.7.62.11 87bfad18",
-  "osm3s": {
-    "timestamp_osm_base": "2026-05-19T11:41:45Z",
-    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+[
+  {
+    "id": "osm_node_312514905",
+    "name": "Dennigkofen I",
+    "lat": 46.9518813,
+    "lng": 7.4890475,
+    "address": "Dennigkofenweg 197",
+    "type": "Kindergarten"
   },
-  "elements": [
-    {
-      "type": "node",
-      "id": 312514905,
-      "lat": 46.9518813,
-      "lon": 7.4890475,
-      "tags": {
-        "addr:city": "Ostermundigen",
-        "addr:country": "CH",
-        "addr:housenumber": "197",
-        "addr:postcode": "3072",
-        "addr:street": "Dennigkofenweg",
-        "amenity": "kindergarten",
-        "check_date": "2024-02-03",
-        "contact:email": "schulleitung@dennigkofen.ch",
-        "contact:phone": "+41 31 9315025",
-        "name": "Dennigkofen I",
-        "source": "survey and website",
-        "website": "https://dennigkofen.ch/schule/kindergarten/"
-      }
-    },
-    {
-      "type": "node",
-      "id": 614844434,
-      "lat": 46.9632021,
-      "lon": 7.4620302,
-      "tags": {
-        "amenity": "kindergarten",
-        "name": "Kindergarten Wankdorf"
-      }
-    },
-    {
-      "type": "node",
-      "id": 620033325,
-      "lat": 46.959418,
-      "lon": 7.4457196,
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:addr": "Lorrainestrasse 84, 3013 Bern",
-        "name": "Kindergärten Lorraine 1 + 2"
-      }
-    },
-    {
-      "type": "node",
-      "id": 1615247146,
-      "lat": 46.9401281,
-      "lon": 7.4783943,
-      "tags": {
-        "addr:housename": "Ecole cantonale de langue française",
-        "addr:housenumber": "2",
-        "addr:postcode": "3015",
-        "addr:street": "Jupiterstrasse",
-        "amenity": "kindergarten",
-        "wheelchair": "yes"
-      }
-    },
-    {
-      "type": "node",
-      "id": 1763606661,
-      "lat": 46.9396182,
-      "lon": 7.4341023,
-      "tags": {
-        "amenity": "kindergarten",
-        "name": "Kindergarten Sulgenbach"
-      }
-    },
-    {
-      "type": "node",
-      "id": 2293072667,
-      "lat": 46.9592745,
-      "lon": 7.449093,
-      "tags": {
-        "amenity": "kindergarten",
-        "check_date": "2026-02-20",
-        "contact:addr": "Wylerstrasse 23, 3014 Bern",
-        "contact:phone": "+41 31 332 25 33",
-        "name": "Kindergarten Breitenrain I, II und III",
-        "website": "https://breitenrain-lorraine.ch/schulkreis-breitenrain-lorraine/standort-spitalacker-breitenrain/kindergaerten-basisstufen/"
-      }
-    },
-    {
-      "type": "node",
-      "id": 2394363807,
-      "lat": 46.967153,
-      "lon": 7.4605191,
-      "tags": {
-        "amenity": "kindergarten",
-        "check_date": "2025-12-23",
-        "contact:addr": "Stauffacherstrasse 80, 3014 Bern",
-        "contact:email": "be.wankdorf@kidsco.ch",
-        "contact:phone": "+41 31 3316161",
-        "name": "Kids & Co Wankdorf",
-        "opening_hours": "Mo-Fr 07:00-18:30; Sa-Su off; PH off",
-        "source": "Survey and website",
-        "website": "https://www.profawo.ch/angebot/kids-co-kitas/bern/wankdorf"
-      }
-    },
-    {
-      "type": "node",
-      "id": 2925703788,
-      "lat": 46.9450622,
-      "lon": 7.3993477,
-      "tags": {
-        "addr:full": "Langobardenstrasse 15, 3018 Bern",
-        "amenity": "kindergarten",
-        "name": "Kindergarten Stöckacker",
-        "operator": "Schulkreis Bethlehem, Standort Stöckacker"
-      }
-    },
-    {
-      "type": "node",
-      "id": 3092144682,
-      "lat": 46.9438712,
-      "lon": 7.4651414,
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:addr": "Segantinistrasse 5, 3006 Bern",
-        "contact:phone": "+41 31 3212237",
-        "name": "Kindergarten Egelsee 1",
-        "operator": "Stadt Bern",
-        "source": "survey and website",
-        "website": "https://kirchenfeld-schosshalde.ch/l-laubegg/l-kindergaerten/l-egelsee-1"
-      }
-    },
-    {
-      "type": "node",
-      "id": 3092165929,
-      "lat": 46.9447538,
-      "lon": 7.4664556,
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:addr": "Egelgasse 50, 3006 Bern",
-        "contact:phone": "+41 31 3212238",
-        "name": "Kindergarten Egelsee 2",
-        "operator": "Stadt Bern",
-        "source": "survey and website",
-        "website": "https://kirchenfeld-schosshalde.ch/l-laubegg/l-kindergaerten/l-egelsee-2"
-      }
-    },
-    {
-      "type": "node",
-      "id": 3092204274,
-      "lat": 46.9431755,
-      "lon": 7.4543272,
-      "tags": {
-        "addr:city": "Bern",
-        "addr:housenumber": "11",
-        "addr:postcode": "3005",
-        "addr:street": "Florastrasse",
-        "amenity": "kindergarten",
-        "name": "Kindergarten Florastrasse",
-        "operator": "Stadt Bern",
-        "operator:type": "public",
-        "phone": "+41 31 3212288",
-        "social_facility:for": "child",
-        "website": "https://kirchenfeld-schosshalde.ch/kirchenfeld/kindergaerten"
-      }
-    },
-    {
-      "type": "node",
-      "id": 3226157173,
-      "lat": 46.9517101,
-      "lon": 7.4888515,
-      "tags": {
-        "addr:city": "Ostermundigen",
-        "addr:country": "CH",
-        "addr:housenumber": "197",
-        "addr:postcode": "3072",
-        "addr:street": "Dennigkofenweg",
-        "amenity": "kindergarten",
-        "contact:email": "schulleitung@dennigkofen.ch",
-        "contact:phone": "+41 31 9317205",
-        "name": "Dennigkofen II",
-        "source": "survey and website",
-        "website": "https://www.dennigkofen.ch/schule/kindergarten/index.htm"
-      }
-    },
-    {
-      "type": "node",
-      "id": 3504753362,
-      "lat": 46.943436,
-      "lon": 7.4139125,
-      "tags": {
-        "addr:city": "Bern",
-        "addr:country": "CH",
-        "addr:housenumber": "7",
-        "addr:postcode": "3008",
-        "addr:street": "Schlossmattstrasse",
-        "amenity": "kindergarten",
-        "contact:email": "christine.dober@base4kids.ch",
-        "contact:phone": "+41 31 3818953",
-        "name": "Kindergarten Schlossmatte",
-        "operator": "Stadt Bern",
-        "source": "survey and website",
-        "website": "https://mawe-bern.ch/index.php?page=440"
-      }
-    },
-    {
-      "type": "node",
-      "id": 3504792314,
-      "lat": 46.9463345,
-      "lon": 7.4267395,
-      "tags": {
-        "addr:city": "Bern",
-        "addr:country": "CH",
-        "addr:housenumber": "10",
-        "addr:postcode": "3007",
-        "addr:street": "Brunnmattstrasse",
-        "amenity": "kindergarten",
-        "contact:email": "silvia.neukomm@base4kids.ch",
-        "contact:phone": "+41 31 3807079",
-        "isced:level": "0",
-        "name": "Kindergarten Brunnenhaus",
-        "website": "https://mawe-bern.ch/index.php?page=435"
-      }
-    },
-    {
-      "type": "node",
-      "id": 4092269070,
-      "lat": 46.9573039,
-      "lon": 7.430067,
-      "tags": {
-        "amenity": "kindergarten",
-        "name": "Kindergarten Hochfeld I+II"
-      }
-    },
-    {
-      "type": "node",
-      "id": 4454976389,
-      "lat": 46.9386239,
-      "lon": 7.4220578,
-      "tags": {
-        "amenity": "kindergarten"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5018206183,
-      "lat": 46.9296621,
-      "lon": 7.4505864,
-      "tags": {
-        "addr:city": "Wabern",
-        "addr:country": "CH",
-        "addr:housenumber": "235",
-        "addr:postcode": "3084",
-        "addr:street": "Seftigenstrasse",
-        "alt_name": "Kita Tabaluga",
-        "amenity": "kindergarten",
-        "capacity": "24",
-        "contact:email": "kibe@koeniz.ch",
-        "contact:phone": "+41 31 970 10 10",
-        "contact:website": "http://www.kibeplus.ch/#/Kinderbetreuung/kita%2Dtabaluga",
-        "max_age": "10",
-        "min_age": "2 months",
-        "name": "Kindertagesstätte Tabaluga",
-        "opening_hours": "Mo-Fr 07:00-18:30; Sa-Su off",
-        "operator": "Verein kibe plus / Gemeinde",
-        "operator:type": "private",
-        "social_facility:for": "child"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5035234326,
-      "lat": 46.9450068,
-      "lon": 7.4670098,
-      "tags": {
-        "addr:city": "Bern",
-        "addr:housenumber": "29",
-        "addr:postcode": "3006",
-        "addr:street": "Egelgasse",
-        "amenity": "school",
-        "contact:phone": "+41 31 3212215",
-        "name": "Schulhaus Wyssloch Modul",
-        "operator": "Stadt Bern",
-        "source": "survey and website",
-        "website": "https://kirchenfeld-schosshalde.ch/index.php?page=511"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5269914797,
-      "lat": 46.9520636,
-      "lon": 7.4645708,
-      "tags": {
-        "amenity": "kindergarten",
-        "capacity": "24",
-        "contact:addr": "Bitziusstrasse 3, 3006 Bern",
-        "contact:email": "kiha.ginkgo@bluewin.ch",
-        "contact:phone": "+41 31 3518310",
-        "contact:website": "http://www.kihaginkgo.ch/kontakt.html",
-        "min_age": "2 months",
-        "name": "Kinderhaus Ginkgo",
-        "opening_hours": "Mo-Th 06:30-18:30; Fr-Su off",
-        "operator": "Regula und Pascal Hiltbrunner-Eichenberger",
-        "operator:type": "private",
-        "social_facility:for": "child",
-        "source": "website",
-        "website": "http://www.kihaginkgo.ch"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5286301710,
-      "lat": 46.9372233,
-      "lon": 7.4370911,
-      "tags": {
-        "alt_name": "Kindertagesstätte Yeladim",
-        "amenity": "kindergarten",
-        "capacity": "tbd",
-        "contact:addr": "Weissenbühlweg 43, 3007 Bern",
-        "contact:email": "info@kitayeladim.ch",
-        "contact:phone": "+41 31 371 81 81",
-        "contact:website": "http://www.kitayeladim.ch/kontakt/",
-        "min_age": "tbd",
-        "name": "KITA Yeladim",
-        "opening_hours": "Mo-Fr 06:30-18:00; Sa-Su off",
-        "operator": "Verein Kita Yeladim",
-        "operator:type": "private",
-        "social_facility:for": "child",
-        "website": "http://www.kitayeladim.ch/"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5351667713,
-      "lat": 46.9359457,
-      "lon": 7.4252225,
-      "tags": {
-        "addr:city": "Bern",
-        "addr:country": "CH",
-        "addr:housenumber": "59",
-        "addr:postcode": "3008",
-        "addr:street": "Schwarzenburgstrasse",
-        "amenity": "kindergarten",
-        "capacity": "22",
-        "email": "info@chindertroum.ch",
-        "min_age": "4 years",
-        "name": "Waldkindergarten Chindertroum",
-        "opening_hours": "Mo, We, Fr 08:30-12:00; Tu, Th 08:30-14:00; Sa, Su off",
-        "operator:type": "private",
-        "phone": "+41 79 567 56 09",
-        "social_facility:for": "child",
-        "website": "https://www.chindertroum.ch/"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5351667714,
-      "lat": 46.9360153,
-      "lon": 7.4252675,
-      "tags": {
-        "addr:city": "Bern",
-        "addr:country": "CH",
-        "addr:housenumber": "59",
-        "addr:postcode": "3008",
-        "addr:street": "Schwarzenburgstrasse",
-        "amenity": "kindergarten",
-        "capacity": "12",
-        "email": "info@chindertroum.ch",
-        "min_age": "2 years",
-        "name": "Waldspielgruppe Chindertroum",
-        "opening_hours": "Mo-Fr 09:00-12:00; Sa, Su off",
-        "operator:type": "private",
-        "phone": "+41 79 567 56 09",
-        "social_facility:for": "child",
-        "website": "https://www.chindertroum.ch/"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5506404217,
-      "lat": 46.9446304,
-      "lon": 7.4616764,
-      "tags": {
-        "addr:city": "Bern",
-        "addr:country": "CH",
-        "addr:housenumber": "40",
-        "addr:postcode": "3006",
-        "addr:street": "Kleiner Muristalden",
-        "amenity": "kindergarten",
-        "contact:phone": "+41 31 3211587",
-        "name": "Kindergarten Schosshalde I",
-        "operator": "Stadt Bern",
-        "source": "survey and website",
-        "website": "https://kirchenfeld-schosshalde.ch/index.php?page=512"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5506404220,
-      "lat": 46.9445906,
-      "lon": 7.4617556,
-      "tags": {
-        "addr:city": "Bern",
-        "addr:country": "CH",
-        "addr:housenumber": "40",
-        "addr:postcode": "3006",
-        "addr:street": "Kleiner Muristalden",
-        "amenity": "kindergarten",
-        "contact:phone": "+41 31 3211587",
-        "name": "Kindegarten Schosshalde II",
-        "operator": "Stadt Bern",
-        "source": "survey and website",
-        "website": "https://kirchenfeld-schosshalde.ch/index.php?page=513"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5540295412,
-      "lat": 46.9562578,
-      "lon": 7.4452031,
-      "tags": {
-        "alt_name": "Montessori Kinderhaus Lorraine",
-        "amenity": "kindergarten",
-        "capacity": "tbd",
-        "check_date": "2026-04-11",
-        "contact:addr": "Lorrainestrasse 18, 3013 Bern",
-        "contact:email": "info@montessoribern.ch",
-        "contact:phone": "+41 31 332 71 76",
-        "contact:website": "https://www.montessoribern.ch/kontakt",
-        "min_age": "2.5 years",
-        "name": "Montessori Kinderhaus",
-        "opening_hours": "Mo-Fr 07:45-17:30; Sa-Su off",
-        "operator": "Montessori-Kinderhaus Lorraine Susanne Bossart (Einzelunternehmen)",
-        "operator:type": "private",
-        "social_facility:for": "child",
-        "website": "https://www.montessoribern.ch/"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5605370633,
-      "lat": 46.9382464,
-      "lon": 7.4451035,
-      "tags": {
-        "addr:city": "Bern",
-        "addr:housenumber": "91",
-        "addr:postcode": "3005",
-        "addr:street": "Dalmaziquai",
-        "amenity": "kindergarten",
-        "contact:phone": "+41 31 3511041",
-        "name": "Kindergarten Dalmaziquai",
-        "source": "Survey and website",
-        "website": "https://kirchenfeld-schosshalde.ch/index.php?page=442"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5625387605,
-      "lat": 46.9421207,
-      "lon": 7.438561,
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:addr": "Sulgeneckstrasse 59c, 3005 Bern",
-        "contact:phone": "+41 31 3212829",
-        "name": "Kindergarten Marzili I",
-        "operator": "Stadt Bern",
-        "source": "Survey and website",
-        "website": "https://mawe-bern.ch/marzilisulgenbach/standorte/kindergaerten-2/"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5625387606,
-      "lat": 46.9422436,
-      "lon": 7.4387225,
-      "tags": {
-        "addr:city": "Bern",
-        "addr:housenumber": "59c",
-        "addr:postcode": "3005",
-        "addr:street": "Sulgeneckstrasse",
-        "amenity": "kindergarten",
-        "contact:phone": "+41 31 3212813",
-        "name": "Kindergarten Marzili II",
-        "operator": "Stadt Bern",
-        "source": "Survey and website",
-        "website": "https://mawe-bern.ch/marzilisulgenbach/standorte/kindergaerten-2/"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5644386702,
-      "lat": 46.9368419,
-      "lon": 7.4497173,
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:addr": "Thormannstrasse 80, 3005 Bern",
-        "contact:phone": "+41 31 3212287",
-        "name": "Kindergarten Dählhölzli",
-        "operator": "Stadt Bern",
-        "operator:type": "public",
-        "social_facility:for": "child",
-        "source": "survey and website",
-        "website": "https://kirchenfeld-schosshalde.ch/k-kirchenfeld/k-kindergaerten/k-daelhoelzli/"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5766182323,
-      "lat": 46.9556803,
-      "lon": 7.4299307,
-      "tags": {
-        "amenity": "kindergarten",
-        "check_date": "2023-04-13",
-        "contact:addr": "Neufeldstrasse 10, 3012 Bern",
-        "contact:phone": "+41 31 3212886",
-        "name": "Kindergarten Neufeld II",
-        "operator": "Stadt Bern",
-        "operator:type": "public",
-        "source": "Survey and website",
-        "website": "https://laenggasse-felsenau.ch/hochfeld-2-muesmatt/kindergaerten-hochfeld-2"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5766182324,
-      "lat": 46.9555776,
-      "lon": 7.4295947,
-      "tags": {
-        "amenity": "kindergarten",
-        "check_date": "2023-04-13",
-        "contact:addr": "Neufeldstrasse 8, 3012 Bern",
-        "contact:phone": "+41 31 3212885",
-        "name": "Kindergarten Neufeld I",
-        "operator": "Stadt Bern",
-        "operator:type": "public",
-        "source": "Survey and website",
-        "website": "https://laenggasse-felsenau.ch/hochfeld-2-muesmatt/kindergaerten-hochfeld-2"
-      }
-    },
-    {
-      "type": "node",
-      "id": 5939907501,
-      "lat": 46.943119,
-      "lon": 7.3903327,
-      "tags": {
-        "amenity": "school",
-        "contact:addr": "Bümplizstrasse 94, 3018 Bümpliz",
-        "contact:phone": "+41 31 3215182",
-        "name": "Schulhaus Dorf",
-        "operator": "Stadt Bern",
-        "website": "https://www.schulen-buempliz.ch/524.html"
-      }
-    },
-    {
-      "type": "node",
-      "id": 6184536334,
-      "lat": 46.9445522,
-      "lon": 7.3956543,
-      "tags": {
-        "amenity": "kindergarten",
-        "name": "Schwabgut 1 + 2",
-        "operator": "Schulkreis Bethlehem, Standort Schwabgut"
-      }
-    },
-    {
-      "type": "node",
-      "id": 6387637127,
-      "lat": 46.9299465,
-      "lon": 7.4524349,
-      "tags": {
-        "amenity": "kindergarten",
-        "name": "Kindergarten Wandermatte"
-      }
-    },
-    {
-      "type": "node",
-      "id": 6704336267,
-      "lat": 46.9480014,
-      "lon": 7.3863688,
-      "tags": {
-        "addr:full": "Waldmannstrasse 49, 3027 Bern",
-        "amenity": "kindergarten",
-        "name": "Kindergarten Tscharnergut 2",
-        "operator": "Stadt Bern"
-      }
-    },
-    {
-      "type": "node",
-      "id": 6744759359,
-      "lat": 46.9555142,
-      "lon": 7.4549752,
-      "tags": {
-        "amenity": "kindergarten",
-        "check_date": "2025-11-10",
-        "contact:addr": "Spitalackerstrasse 34, 3013 Bern",
-        "contact:phone": "+41 31 3212434",
-        "name": "Kindergarten Spitalacker 1",
-        "operator": "Stadt Bern",
-        "website": "https://breitenrain-lorraine.ch/schulkreis-breitenrain-lorraine/standort-spitalacker-breitenrain/kindergaerten-basisstufen"
-      }
-    },
-    {
-      "type": "node",
-      "id": 6744759360,
-      "lat": 46.9554472,
-      "lon": 7.4552052,
-      "tags": {
-        "amenity": "kindergarten",
-        "check_date": "2025-11-10",
-        "contact:addr": "Spitalackerstrasse 34, 3013 Bern",
-        "contact:phone": "+41 31 3212435",
-        "name": "Kindergarten Spitalacker 2",
-        "operator": "Stadt Bern",
-        "website": "https://breitenrain-lorraine.ch/schulkreis-breitenrain-lorraine/standort-spitalacker-breitenrain/kindergaerten-basisstufen"
-      }
-    },
-    {
-      "type": "node",
-      "id": 6747787799,
-      "lat": 46.9623945,
-      "lon": 7.4577752,
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:addr": "Tellstrasse 25, 3014 Bern",
-        "contact:phone": "+41 31 3212504",
-        "name": "Kindergarten Tellstrasse 1",
-        "operator": "Stadt Bern",
-        "operator:type": "public",
-        "website": "https://breitenrain-lorraine.ch/schulkreis-breitenrain-lorraine/standort-breitfeld-wankdorf/kindergaerten-basisstufen-breitfeld-wankdorf"
-      }
-    },
-    {
-      "type": "node",
-      "id": 6747787800,
-      "lat": 46.9625922,
-      "lon": 7.4574951,
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:addr": "Tellstrasse 25, 3014 Bern",
-        "contact:phone": "+41 31 3212505",
-        "name": "Kindergarten Tellstrasse 2",
-        "operator": "Stadt Bern",
-        "operator:type": "public",
-        "website": "https://breitenrain-lorraine.ch/schulkreis-breitenrain-lorraine/standort-breitfeld-wankdorf/kindergaerten-basisstufen-breitfeld-wankdorf"
-      }
-    },
-    {
-      "type": "node",
-      "id": 10184244312,
-      "lat": 46.9449702,
-      "lon": 7.3931134,
-      "tags": {
-        "addr:city": "Bern",
-        "addr:housenumber": "10",
-        "addr:postcode": "3018",
-        "addr:street": "Schwabstrasse",
-        "amenity": "kindergarten",
-        "name": "Kindergarten Bümpliz Nord",
-        "operator": "Schulen Stadt Bern",
-        "operator:type": "public",
-        "preschool": "yes"
-      }
-    },
-    {
-      "type": "node",
-      "id": 11497543706,
-      "lat": 46.9304893,
-      "lon": 7.417412,
-      "tags": {
-        "addr:housenumber": "40",
-        "addr:street": "Stationsstrasse",
-        "amenity": "kindergarten",
-        "check_date": "2024-01-05",
-        "name": "Basisstufen Stationsstrasse"
-      }
-    },
-    {
-      "type": "way",
-      "id": 32962055,
-      "center": {
-        "lat": 46.9503153,
-        "lon": 7.387302
-      },
-      "nodes": [
-        469137191,
-        6821370174,
-        3536978652,
-        371215325,
-        3536978637,
-        3536978623,
-        3536978643,
-        3536978630,
-        3536978631,
-        3536978679,
-        3536978662,
-        3536978627,
-        6789454666,
-        3536978678,
-        6789454667,
-        6789454665,
-        3536978660,
-        371215326,
-        6789454669,
-        6789454670,
-        6789454671,
-        3536978642,
-        6821370178,
-        5751210322,
-        371215327,
-        5751210321,
-        5751210326,
-        371215328,
-        5751210325,
-        6821370179,
-        5751210324,
-        371215329,
-        6788495691,
-        6880054323,
-        371215332,
-        11873700266,
-        568407532,
-        31204996,
-        6789496592,
-        469137191
-      ],
-      "tags": {
-        "amenity": "school",
-        "contact:addr": "Kornweg 109, 3027 Bern",
-        "contact:phone": "+41 31 3215400",
-        "contact:website": "http://schulkreis-bethlehem.ch/bethlehemacker/ba_adressen",
-        "name": "Schulstandort Bethlehemacker",
-        "operator": "Stadt Bern",
-        "source": "Survey and website",
-        "website": "https://schulkreis-bethlehem.ch/bethlehemacker",
-        "wheelchair": "limited"
-      }
-    },
-    {
-      "type": "way",
-      "id": 40607192,
-      "center": {
-        "lat": 46.9547028,
-        "lon": 7.4448101
-      },
-      "nodes": [
-        493151535,
-        6590056203,
-        6590056206,
-        6590056233,
-        6590056205,
-        6590056204,
-        500015444,
-        493151536,
-        6590056234,
-        6590056236,
-        6590056235,
-        6590056201,
-        6590056199,
-        493151537,
-        6590056232,
-        493151535
-      ],
-      "tags": {
-        "alt_name": "gibb Gewerblich-Industrielle Berufsschule Bern Hauptgebäude",
-        "amenity": "school",
-        "building": "yes",
-        "contact:addr": "Lorrainestrasse 1, 3013 Bern",
-        "contact:fax": "+41 31 3359102",
-        "contact:phone": "+41 31 3359145",
-        "heritage": "2",
-        "heritage:operator": "babs",
-        "historic": "yes",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Gewerbeschule_Süd-Ost.jpg/800px-Gewerbeschule_Süd-Ost.jpg",
-        "name": "Gewerbeschule",
-        "operator": "Stadt Bern",
-        "ref:kgs": "623",
-        "start_date": "1939",
-        "website": "https://www.gibb.ch",
-        "wheelchair": "yes",
-        "wikidata": "Q1520485",
-        "wikimedia_commons": "Category:Gewerbeschule Bern",
-        "wikipedia": "de:Gewerblich Industrielle Berufsschule Bern"
-      }
-    },
-    {
-      "type": "way",
-      "id": 40992510,
-      "center": {
-        "lat": 46.9381295,
-        "lon": 7.4450767
-      },
-      "nodes": [
-        499601339,
-        499601342,
-        2624576796,
-        2624576825,
-        2624678722,
-        499601345,
-        2624585123,
-        2624678729,
-        499601347,
-        2624585124,
-        2624576777,
-        2624529000,
-        499601349,
-        499601350,
-        499601339
-      ],
-      "tags": {
-        "amenity": "kindergarten"
-      }
-    },
-    {
-      "type": "way",
-      "id": 42350743,
-      "center": {
-        "lat": 46.9346098,
-        "lon": 7.4655558
-      },
-      "nodes": [
-        528728382,
-        528728383,
-        529345243,
-        528728385,
-        12109483116,
-        12109483117,
-        12109483115,
-        12109483114,
-        528728387,
-        528728382
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "building": "yes",
-        "name": "Kindergarten Elfenau",
-        "source": "Orthofotos Bern"
-      }
-    },
-    {
-      "type": "way",
-      "id": 42398967,
-      "center": {
-        "lat": 46.9345451,
-        "lon": 7.4656041
-      },
-      "nodes": [
-        529345262,
-        3254113267,
-        3254113266,
-        3254113263,
-        3254113270,
-        3254113265,
-        529345263,
-        529345264,
-        529345265,
-        3254113262,
-        3254113269,
-        3254113264,
-        3254113268,
-        529345262
-      ],
-      "tags": {
-        "amenity": "kindergarten"
-      }
-    },
-    {
-      "type": "way",
-      "id": 43627452,
-      "center": {
-        "lat": 46.9566719,
-        "lon": 7.4772255
-      },
-      "nodes": [
-        551535664,
-        551535672,
-        551535690,
-        551535756,
-        551535699,
-        3341878134,
-        3341878133,
-        3341878129,
-        3341878136,
-        551535798,
-        3341878130,
-        3341878128,
-        3341878132,
-        551535664
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:phone": "+41 31 931 19 58",
-        "contact:website": "https://kirchenfeld-schosshalde.ch/a-altstadt-schosshalde/a-kindergaerten/a-kleine-allmend/",
-        "name": "Kindergarten Burgfeld",
-        "operator": "Stadt Bern"
-      }
-    },
-    {
-      "type": "way",
-      "id": 44016365,
-      "center": {
-        "lat": 46.9504655,
-        "lon": 7.4665605
-      },
-      "nodes": [
-        559648123,
-        559648041,
-        559648044,
-        2382633074,
-        2353418666,
-        2382633087,
-        2382633079,
-        559648050,
-        2382633088,
-        559648053,
-        2382633076,
-        559648057,
-        2382633090,
-        559648069,
-        559648075,
-        559648081,
-        2382633089,
-        559648083,
-        559648085,
-        559648086,
-        559648123
-      ],
-      "tags": {
-        "addr:city": "Bern",
-        "addr:country": "CH",
-        "addr:housenumber": "49",
-        "addr:postcode": "3006",
-        "addr:street": "Haspelweg",
-        "amenity": "kindergarten",
-        "contact:phone": "+41 31 3211591",
-        "name": "Kindergärten Haspelweg I + II",
-        "note": "contact:phone Haspelweg II +41 31 3211592",
-        "website": "https://kirchenfeld-schosshalde.ch/index.php?page=423"
-      }
-    },
-    {
-      "type": "way",
-      "id": 44104513,
-      "center": {
-        "lat": 46.9536564,
-        "lon": 7.4671591
-      },
-      "nodes": [
-        560472980,
-        560472978,
-        7477001605,
-        560472982,
-        560472981,
-        560472980
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:phone": "+41 31 3328203",
-        "name": "Kindergarten Baumgarten",
-        "website": "https://kirchenfeld-schosshalde.ch/index.php?page=421"
-      }
-    },
-    {
-      "type": "way",
-      "id": 46771481,
-      "center": {
-        "lat": 46.9553378,
-        "lon": 7.4550549
-      },
-      "nodes": [
-        597702498,
-        597702502,
-        597702509,
-        597702501,
-        597702500,
-        597702499,
-        597702498
-      ],
-      "tags": {
-        "addr:full": "Spitalackerstrasse 34, 3013 Bern",
-        "amenity": "kindergarten",
-        "check_date": "2025-11-10",
-        "name": "Kindergarten Spitalacker",
-        "website": "https://breitenrain-lorraine.ch/schulkreis-breitenrain-lorraine/standort-spitalacker-breitenrain/kindergaerten-basisstufen"
-      }
-    },
-    {
-      "type": "way",
-      "id": 48238365,
-      "center": {
-        "lat": 46.9624138,
-        "lon": 7.4577368
-      },
-      "nodes": [
-        613042201,
-        613042391,
-        613042389,
-        613042381,
-        11455031842,
-        613042180,
-        613042178,
-        613042176,
-        613042196,
-        613042203,
-        613042201
-      ],
-      "tags": {
-        "addr:full": "Tellstrasse 27-29, 3014 Bern",
-        "amenity": "kindergarten",
-        "website": "https://breitenrain-lorraine.ch/schulkreis-breitenrain-lorraine/standort-breitfeld-wankdorf/kindergaerten-basisstufen-breitfeld-wankdorf/"
-      }
-    },
-    {
-      "type": "way",
-      "id": 48407941,
-      "center": {
-        "lat": 46.9636306,
-        "lon": 7.4622958
-      },
-      "nodes": [
-        614844578,
-        613220707,
-        613220694,
-        613220696,
-        613220689,
-        613220671,
-        614844408,
-        3484068495,
-        3484068190,
-        614844392,
-        614844382,
-        614844504,
-        614844557,
-        614844560,
-        614844572,
-        614844573,
-        6086068200,
-        614844577,
-        6086068199,
-        614844578
-      ],
-      "tags": {
-        "addr:full": "Morgartenstrasse 2, 3014 Bern",
-        "amenity": "school",
-        "name": "Schulstandort Breitfeld/Wankdorf",
-        "operator": "Stadt Bern",
-        "operator:type": "public"
-      }
-    },
-    {
-      "type": "way",
-      "id": 48965754,
-      "center": {
-        "lat": 46.9645037,
-        "lon": 7.4483297
-      },
-      "nodes": [
-        621287501,
-        621287503,
-        621287502,
-        621287524,
-        621287518,
-        4381826113,
-        621287519,
-        5589195611,
-        5589168001,
-        621287517,
-        621287516,
-        621287506,
-        621287501
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "check_date": "2023-07-20",
-        "name": "Kindergarten Wylergut"
-      }
-    },
-    {
-      "type": "way",
-      "id": 50058531,
-      "center": {
-        "lat": 46.9381125,
-        "lon": 7.4397767
-      },
-      "nodes": [
-        6011073263,
-        635745359,
-        635745355,
-        635745362,
-        635745363,
-        635745365,
-        6011073264,
-        6011073265,
-        6011073266,
-        635745367,
-        635745374,
-        6011073263
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "name": "Kindergarten Bürengut"
-      }
-    },
-    {
-      "type": "way",
-      "id": 52066633,
-      "center": {
-        "lat": 46.9401783,
-        "lon": 7.4330606
-      },
-      "nodes": [
-        663644324,
-        663644364,
-        663644366,
-        663644368,
-        663644360,
-        663644361,
-        667410813,
-        663644362,
-        663644363,
-        663644365,
-        663644332,
-        663644334,
-        663644333,
-        663644324
-      ],
-      "tags": {
-        "alt_name": "Rudolf Steiner Kindergarten",
-        "amenity": "kindergarten",
-        "building": "yes",
-        "contact:addr": "Eigerstrasse 24, 3007 Bern",
-        "contact:email": "kindergarten.vogelflug@steinerschule-bern.ch",
-        "contact:phone": "+41 31 3504030",
-        "min_age": "2 years",
-        "name": "Kinderhaus Vogelflug",
-        "opening_hours": "Mo, We, Fr 07:45-11:45; Tu, Th 07:45-11:45, 13:30-17:00; Sa-Su off",
-        "operator": "Rudolf Steiner Schule Bern Ittigen Langnau",
-        "operator:type": "private",
-        "social_facility:for": "child",
-        "source": "Orthofotos Bern",
-        "website": "https://www.steinerschule-bern.ch/"
-      }
-    },
-    {
-      "type": "way",
-      "id": 52429217,
-      "center": {
-        "lat": 46.934693,
-        "lon": 7.4305095
-      },
-      "nodes": [
-        666468287,
-        666468290,
-        666468302,
-        666468301,
-        666468300,
-        666468298,
-        666468297,
-        666468296,
-        666468340,
-        666468339,
-        666468386,
-        666468271,
-        666468265,
-        666468263,
-        666468258,
-        666468256,
-        666468254,
-        666468251,
-        666468249,
-        666468282,
-        666468287
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "name": "Kindergarten Steinhölzli"
-      }
-    },
-    {
-      "type": "way",
-      "id": 52873704,
-      "center": {
-        "lat": 46.9401747,
-        "lon": 7.4243904
-      },
-      "nodes": [
-        670253781,
-        670253784,
-        670253806,
-        670253814,
-        670253821,
-        670253811,
-        668512831,
-        668512829,
-        668512825,
-        670253781
-      ],
-      "tags": {
-        "alt_name": "Volksschule Pestalozzi",
-        "amenity": "school",
-        "barrier": "fence",
-        "name": "Schulstandort Pestalozzi",
-        "operator": "Stadt Bern",
-        "operator:type": "public"
-      }
-    },
-    {
-      "type": "way",
-      "id": 53060898,
-      "center": {
-        "lat": 46.9410091,
-        "lon": 7.4295512
-      },
-      "nodes": [
-        671908404,
-        5555196836,
-        671908410,
-        5555196835,
-        671908409,
-        5555196837,
-        671908407,
-        5555196838,
-        671908405,
-        671908436,
-        5555196843,
-        5555196842,
-        5555196841,
-        5555196840,
-        5555196839,
-        5555196844,
-        5555196845,
-        5555196846,
-        5591233356,
-        671908404
-      ],
-      "tags": {
-        "addr:city": "Bern",
-        "addr:country": "CH",
-        "addr:housenumber": "10",
-        "addr:postcode": "3007",
-        "addr:street": "Tscharnerstrasse",
-        "alt_name": "Heilpädagogische Schule Bern",
-        "amenity": "school",
-        "contact:email": "info@hpsbern.ch",
-        "contact:fax": "+41 31 3212050",
-        "contact:phone": "+41 31 3212040",
-        "isced:level": "2",
-        "name": "Heilpädagogische Schule",
-        "operator": "Stadt Bern",
-        "operator:type": "government",
-        "social_facility": "ambulatory_care",
-        "social_facility:for": "juvenile",
-        "source": "survey and Orthofotos Stadt Bern",
-        "website": "https://www.hpsbern.ch/"
-      }
-    },
-    {
-      "type": "way",
-      "id": 54032928,
-      "center": {
-        "lat": 46.9396198,
-        "lon": 7.4219018
-      },
-      "nodes": [
-        681264226,
-        681264218,
-        681264206,
-        681264227,
-        681264226
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "name": "Kindergarten Bridelstrasse"
-      }
-    },
-    {
-      "type": "way",
-      "id": 54936437,
-      "center": {
-        "lat": 46.9410344,
-        "lon": 7.422467
-      },
-      "nodes": [
-        691251133,
-        691251195,
-        691251194,
-        703075496,
-        691251134,
-        6630638355,
-        691251133
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "building": "kindergarten",
-        "check_date": "2024-05-20",
-        "name": "Kindergarten Munzingerstrasse 1+2",
-        "source": "Orthofotos Bern"
-      }
-    },
-    {
-      "type": "way",
-      "id": 57941068,
-      "center": {
-        "lat": 46.9433731,
-        "lon": 7.4139409
-      },
-      "nodes": [
-        719027392,
-        3504454111,
-        3504454101,
-        3504454108,
-        3504454106,
-        719027238,
-        7468735717,
-        7468735721,
-        3504753351,
-        3504753356,
-        3504753384,
-        719027812,
-        3504753353,
-        3504753410,
-        3504753393,
-        3504753409,
-        719027613,
-        719027588,
-        3504753396,
-        3504753364,
-        3504753371,
-        3504753402,
-        7468735734,
-        719027394,
-        3504753352,
-        3504753355,
-        3504753391,
-        7468735731,
-        3504753377,
-        719027811,
-        719027392
-      ],
-      "tags": {
-        "addr:city": "Bern",
-        "addr:country": "CH",
-        "addr:postcode": "3008",
-        "addr:street": "Schlossmattstrasse",
-        "amenity": "kindergarten"
-      }
-    },
-    {
-      "type": "way",
-      "id": 58364161,
-      "center": {
-        "lat": 46.9458748,
-        "lon": 7.4128747
-      },
-      "nodes": [
-        723848914,
-        723848972,
-        7914009912,
-        7914009919,
-        7914009913,
-        723848919,
-        5153405823,
-        5153405822,
-        6873610317,
-        5153094836,
-        723848848,
-        723849002,
-        723848739,
-        723848801,
-        723848859,
-        723848914
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "check_date": "2026-05-12",
-        "name": "Kindergarten Steigerhubel"
-      }
-    },
-    {
-      "type": "way",
-      "id": 75464676,
-      "center": {
-        "lat": 46.956524,
-        "lon": 7.431292
-      },
-      "nodes": [
-        890947775,
-        890947828,
-        3371937894,
-        3371936587,
-        3371936586,
-        3371937901,
-        3371937900,
-        890948008,
-        3371937909,
-        3371937895,
-        3371936592,
-        3371937913,
-        3371937899,
-        3371937910,
-        890947775
-      ],
-      "tags": {
-        "amenity": "school",
-        "name": "Tagesschule Länggasse",
-        "operator": "Stadt Bern"
-      }
-    },
-    {
-      "type": "way",
-      "id": 76092617,
-      "center": {
-        "lat": 46.958638,
-        "lon": 7.4384992
-      },
-      "nodes": [
-        897640928,
-        897641713,
-        897642798,
-        897642669,
-        897641764,
-        897641357,
-        897642642,
-        897642159,
-        7559606462,
-        897642912,
-        897641481,
-        897642693,
-        897642082,
-        897640928
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "name": "Kindergarten Bonstetten"
-      }
-    },
-    {
-      "type": "way",
-      "id": 92420420,
-      "center": {
-        "lat": 46.9206274,
-        "lon": 7.423103
-      },
-      "nodes": [
-        1072899227,
-        1072898987,
-        1072898767,
-        1072899128,
-        1326909663,
-        1072899227
-      ],
-      "tags": {
-        "addr:street": "Adlerweg",
-        "amenity": "kindergarten",
-        "building": "yes",
-        "building:levels": "1",
-        "ele": "618",
-        "name": "Kindergarten Blinzern",
-        "roof:shape": "gabled"
-      }
-    },
-    {
-      "type": "way",
-      "id": 94080834,
-      "center": {
-        "lat": 46.9365922,
-        "lon": 7.3869793
-      },
-      "nodes": [
-        1093750509,
-        1093751336,
-        1093750639,
-        1093751191,
-        1093750551,
-        10304153038,
-        10304153039,
-        1093751040,
-        1093750509
-      ],
-      "tags": {
-        "addr:housenumber": "41a",
-        "addr:street": "Rehhagstrasse",
-        "amenity": "kindergarten",
-        "building": "yes",
-        "name": "Kleefeld I"
-      }
-    },
-    {
-      "type": "way",
-      "id": 94792345,
-      "center": {
-        "lat": 46.939052,
-        "lon": 7.392254
-      },
-      "nodes": [
-        1100468110,
-        1100468242,
-        6725272239,
-        6725272240,
-        6725272228,
-        6725272229,
-        1100468127,
-        1100468386,
-        5648568422,
-        1100468110
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "building": "yes",
-        "name": "Kindergarten Statthalter"
-      }
-    },
-    {
-      "type": "way",
-      "id": 95838951,
-      "center": {
-        "lat": 46.941564,
-        "lon": 7.39925
-      },
-      "nodes": [
-        1110658749,
-        1112867803,
-        1110658791,
-        7072174907,
-        7072174906,
-        1110658720,
-        1110658811,
-        1110658749
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "building": "yes",
-        "check_date": "2023-12-02",
-        "name": "Kirchacker II",
-        "operator": "Stadt Bern",
-        "source": "Orthofotos Stadt Bern, Survey"
-      }
-    },
-    {
-      "type": "way",
-      "id": 95838968,
-      "center": {
-        "lat": 46.9414238,
-        "lon": 7.3996685
-      },
-      "nodes": [
-        1110658752,
-        1112867981,
-        1110658797,
-        1110658729,
-        1110658819,
-        1110658752
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "building": "yes",
-        "check_date": "2023-12-02",
-        "name": "Kirchacker I",
-        "operator": "Stadt Bern",
-        "source": "Orthofotos Stadt Bern, Survey"
-      }
-    },
-    {
-      "type": "way",
-      "id": 96211630,
-      "center": {
-        "lat": 46.947952,
-        "lon": 7.3879321
-      },
-      "nodes": [
-        1115223826,
-        5744570715,
-        1115225019,
-        1115223806,
-        1115224509,
-        1115223826
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "building": "yes",
-        "name": "Kindergarten Tscharnergut 1",
-        "roof:shape": "flat"
-      }
-    },
-    {
-      "type": "way",
-      "id": 96748976,
-      "center": {
-        "lat": 46.9420513,
-        "lon": 7.3812871
-      },
-      "nodes": [
-        1120325629,
-        1120325290,
-        1128056434,
-        1120325139,
-        1120325510,
-        1120325629
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "building": "yes",
-        "name": "Kindergarten Winterhalde"
-      }
-    },
-    {
-      "type": "way",
-      "id": 217851350,
-      "center": {
-        "lat": 46.9438421,
-        "lon": 7.4651492
-      },
-      "nodes": [
-        1835369087,
-        7113199374,
-        7113199381,
-        7113199380,
-        7113199379,
-        7113199378,
-        7113199377,
-        7113199376,
-        2270257730,
-        7113199375,
-        2270257721,
-        2318761495,
-        2270257726,
-        2318761496,
-        2270257718,
-        2270257720,
-        7113239289,
-        2318761497,
-        2578040741,
-        7113199370,
-        7113199369,
-        7113199368,
-        7113199367,
-        7113199366,
-        7113199365,
-        7113199364,
-        7113199363,
-        7113199362,
-        2271572006,
-        2271564185,
-        1835369086,
-        1835369087
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:addr": "Segantinistrasse 5, 3006 Bern"
-      }
-    },
-    {
-      "type": "way",
-      "id": 244224886,
-      "center": {
-        "lat": 46.9367693,
-        "lon": 7.4499711
-      },
-      "nodes": [
-        2588489557,
-        2515621938,
-        498286133,
-        498286153,
-        2515594169,
-        2588506019,
-        2588391584,
-        498286157,
-        498286155,
-        498747435,
-        2588489557
-      ],
-      "tags": {
-        "amenity": "kindergarten"
-      }
-    },
-    {
-      "type": "way",
-      "id": 245198156,
-      "center": {
-        "lat": 46.9294757,
-        "lon": 7.4863915
-      },
-      "nodes": [
-        2524356490,
-        2524356523,
-        2524356492,
-        2524356501,
-        2524356521,
-        2524356496,
-        6966960493,
-        2524356490
-      ],
-      "tags": {
-        "addr:city": "Muri bei Bern",
-        "addr:country": "CH",
-        "addr:housenumber": "15",
-        "addr:postcode": "3074",
-        "addr:street": "Belpstrasse",
-        "amenity": "kindergarten",
-        "building": "kindergarten",
-        "name": "Kindergarten Horbern I / II"
-      }
-    },
-    {
-      "type": "way",
-      "id": 248042655,
-      "center": {
-        "lat": 46.9424152,
-        "lon": 7.470826
-      },
-      "nodes": [
-        506818420,
-        506818421,
-        506818422,
-        506818424,
-        6446596003,
-        506818420
-      ],
-      "tags": {
-        "addr:full": "Jolimontstrasse 1, 3006 Bern",
-        "amenity": "kindergarten",
-        "area": "yes",
-        "contact:phone": "+41 31 3212206",
-        "name": "Kindergarten Sonnenhof"
-      }
-    },
-    {
-      "type": "way",
-      "id": 251611220,
-      "center": {
-        "lat": 46.944715,
-        "lon": 7.4664845
-      },
-      "nodes": [
-        2578046480,
-        2578046481,
-        1835369077,
-        1835369079,
-        2271564156,
-        2578046480
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:addr": "Egelgasse 50, 3006 Bern"
-      }
-    },
-    {
-      "type": "way",
-      "id": 260624517,
-      "center": {
-        "lat": 46.9624116,
-        "lon": 7.4568074
-      },
-      "nodes": [
-        2661444010,
-        613042029,
-        11455031844,
-        613042183,
-        11455031845,
-        11455031843,
-        613042180,
-        11455031842,
-        613042381,
-        613042389,
-        2661444009,
-        2661444011,
-        6758142682,
-        6758142673,
-        6758142674,
-        6758142675,
-        6758142676,
-        2661444010
-      ],
-      "tags": {
-        "alt_name": "Schulhaus Markus",
-        "amenity": "school",
-        "contact:addr": "Weingartstrasse, 18, 3014 Bern",
-        "contact:phone": "+41 31 3212500",
-        "operator": "Stadt Bern",
-        "operator:type": "public",
-        "website": "https://breitenrain-lorraine.ch/schulkreis-breitenrain-lorraine/standort-breitfeld-wankdorf/schulhaus-markus/"
-      }
-    },
-    {
-      "type": "way",
-      "id": 260628674,
-      "center": {
-        "lat": 46.9624465,
-        "lon": 7.4564761
-      },
-      "nodes": [
-        610223336,
-        610223337,
-        610223339,
-        610223349,
-        610223350,
-        610223346,
-        610223347,
-        610223351,
-        6758148085,
-        610223359,
-        610223358,
-        610223360,
-        6758142683,
-        6758142684,
-        6758148086,
-        6758148094,
-        610223335,
-        6758148143,
-        6758148142,
-        610223338,
-        613042031,
-        6758148087,
-        6758148088,
-        610223334,
-        610223336
-      ],
-      "tags": {
-        "alt_name": "Markusschulhaus",
-        "amenity": "school",
-        "building": "public",
-        "contact:addr": "Weingartstrasse 18, 3014 Bern",
-        "contact:phone": "+41 31 3212500",
-        "name": "Schulhaus Markus",
-        "operator": "Stadt Bern",
-        "operator:type": "public",
-        "source": "Orthofotos Bern",
-        "website": "https://breitenrain-lorraine.ch/schulkreis-breitenrain-lorraine/standort-breitfeld-wankdorf/schulhaus-markus/"
-      }
-    },
-    {
-      "type": "way",
-      "id": 284262257,
-      "center": {
-        "lat": 46.9367175,
-        "lon": 7.4176491
-      },
-      "nodes": [
-        2999214654,
-        713438864,
-        2999214675,
-        713438872,
-        2999214640,
-        2999214679,
-        2999214663,
-        2999214669,
-        2999214652,
-        2999214673,
-        2999214639,
-        2999214677,
-        2999214637,
-        2999214633,
-        713438961,
-        2999214654
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "check_date": "2025-08-30",
-        "contact:addr": "Rappardplatz 1, 3008 Bern",
-        "contact:phone": "+41 31 3728414",
-        "name": "Kindergarten Weissenstein I",
-        "website": "http://mawe-bern.ch/brunnmattsteigerhubel/standorte/kindergaerten/#1487183885416-d333d084-2a44"
-      }
-    },
-    {
-      "type": "way",
-      "id": 305844853,
-      "center": {
-        "lat": 46.9463609,
-        "lon": 7.4500281
-      },
-      "nodes": [
-        3105313436,
-        6074036967,
-        3105313429,
-        3105313430,
-        3105308334,
-        3105313432,
-        3105313435,
-        3105313431,
-        6074036969,
-        3105313437,
-        3105313434,
-        3105322719,
-        6074036966,
-        6074036965,
-        6074036977,
-        3105313436
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:phone": "+41 31 3112309",
-        "name": "Kindergarten Fricktreppe"
-      }
-    },
-    {
-      "type": "way",
-      "id": 316491929,
-      "center": {
-        "lat": 46.9517718,
-        "lon": 7.488983
-      },
-      "nodes": [
-        3226157179,
-        3226157168,
-        3226157172,
-        3226157180,
-        3226157170,
-        3226157169,
-        3226157171,
-        3226157175,
-        3226157179
-      ],
-      "tags": {
-        "amenity": "kindergarten"
-      }
-    },
-    {
-      "type": "way",
-      "id": 316492808,
-      "center": {
-        "lat": 46.9517718,
-        "lon": 7.488983
-      },
-      "nodes": [
-        3226166485,
-        3226166491,
-        3226166490,
-        3226166486,
-        3226166495,
-        3226166483,
-        3226166484,
-        3226166480,
-        3226166494,
-        3226166485
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "barrier": "fence",
-        "source": "Orthofotos Bern"
-      }
-    },
-    {
-      "type": "way",
-      "id": 317249585,
-      "center": {
-        "lat": 46.9281917,
-        "lon": 7.4241729
-      },
-      "nodes": [
-        3234968161,
-        3234961054,
-        3234961050,
-        3234961055,
-        3234968161
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "contact:phone": "+41 31 9714868",
-        "name": "Wabersacker II",
-        "website": "https://www.schulehessgut.ch/pages/kindergarten.php"
-      }
-    },
-    {
-      "type": "way",
-      "id": 340737930,
-      "center": {
-        "lat": 46.9414253,
-        "lon": 7.3995555
-      },
-      "nodes": [
-        3479905300,
-        3479905255,
-        3479905325,
-        3479905256,
-        3479905272,
-        3479905285,
-        3479905306,
-        3479905260,
-        3479905271,
-        3479905287,
-        3479905264,
-        3479905289,
-        3482747042,
-        3479905313,
-        3479905300
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "check_date": "2023-12-02",
-        "name": "Kindergärten Kirchacker I+II",
-        "website": "https://www.schulen-buempliz.ch/buempliz_hoehe.html"
-      }
-    },
-    {
-      "type": "way",
-      "id": 573306030,
-      "center": {
-        "lat": 46.926708,
-        "lon": 7.4323407
-      },
-      "nodes": [
-        5506627074,
-        5506627073,
-        849616117,
-        849616558,
-        849616240,
-        849616660,
-        5506627074
-      ],
-      "tags": {
-        "amenity": "kindergarten"
-      }
-    },
-    {
-      "type": "way",
-      "id": 589079692,
-      "center": {
-        "lat": 46.9422,
-        "lon": 7.4386858
-      },
-      "nodes": [
-        564854260,
-        5463087088,
-        5463087089,
-        5463087084,
-        5463087083,
-        5463087082,
-        564854156,
-        564852919,
-        7612361372,
-        5463087072,
-        7612361375,
-        7612361376,
-        7612361377,
-        564854148,
-        7612361378,
-        7612361379,
-        564854184,
-        5463087080,
-        5625387604,
-        5463087081,
-        5625387603,
-        5463087077,
-        564854309,
-        564854315,
-        564854320,
-        6419892558,
-        6419892557,
-        6419892556,
-        564854558,
-        564854554,
-        564854432,
-        564854356,
-        564854348,
-        564854422,
-        564854260
-      ],
-      "tags": {
-        "amenity": "kindergarten"
-      }
-    },
-    {
-      "type": "way",
-      "id": 608676593,
-      "center": {
-        "lat": 46.9556222,
-        "lon": 7.4298222
-      },
-      "nodes": [
-        5766182315,
-        7533757113,
-        5766182316,
-        5766182329,
-        5766182317,
-        5766182318,
-        5766182319,
-        5766182320,
-        5766182321,
-        5766182322,
-        6641494142,
-        5766182315
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "barrier": "fence",
-        "check_date": "2023-04-13",
-        "name": "Neufeld 2 & 3"
-      }
-    },
-    {
-      "type": "way",
-      "id": 640961551,
-      "center": {
-        "lat": 46.9594174,
-        "lon": 7.4455339
-      },
-      "nodes": [
-        620387808,
-        620387807,
-        620387695,
-        6037379029,
-        5843524536,
-        620033315,
-        620033322,
-        7221409691,
-        620033321,
-        620033324,
-        620033326,
-        620387808
-      ],
-      "tags": {
-        "amenity": "kindergarten"
-      }
-    },
-    {
-      "type": "way",
-      "id": 690305580,
-      "center": {
-        "lat": 46.9415652,
-        "lon": 7.4272833
-      },
-      "nodes": [
-        6710591416,
-        668343407,
-        8807475520,
-        8807475521,
-        668343417,
-        668343390,
-        668343399,
-        668343401,
-        668343404,
-        671908388,
-        668343388,
-        6710591415,
-        6710591416
-      ],
-      "tags": {
-        "addr:city": "Bern",
-        "addr:country": "CH",
-        "addr:housenumber": "18",
-        "addr:postcode": "3007",
-        "addr:street": "Hopfenweg",
-        "alt_name": "Kinderhaus Bernische Stiftung Elfenau",
-        "amenity": "kindergarten",
-        "building": "yes",
-        "contact:email": "info@kinderhaus-elfenau.ch",
-        "contact:phone": "+41 31 371 72 74",
-        "name": "Kinderhaus Elfenau",
-        "operator:type": "private",
-        "roof:material": "roof_tiles",
-        "social_facility:for": "child",
-        "source": "Orthofotos Bern",
-        "website": "https://www.kinderhaus-elfenau.ch/"
-      }
-    },
-    {
-      "type": "way",
-      "id": 734632842,
-      "center": {
-        "lat": 46.9519965,
-        "lon": 7.390295
-      },
-      "nodes": [
-        6879978956,
-        6879978960,
-        6879978957,
-        6879978958,
-        6879978959,
-        6879978956
-      ],
-      "tags": {
-        "addr:city": "Bern",
-        "addr:housenumber": "15c",
-        "addr:postcode": "3027",
-        "addr:street": "Kasparstrasse",
-        "amenity": "kindergarten",
-        "building": "yes",
-        "name": "Kindergarten",
-        "roof:shape": "flat"
-      }
-    },
-    {
-      "type": "way",
-      "id": 1001119101,
-      "center": {
-        "lat": 46.9293423,
-        "lon": 7.4410049
-      },
-      "nodes": [
-        278026246,
-        9240820287,
-        9240820286,
-        9240820285,
-        9240820284,
-        9240820283,
-        278026246
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "name": "Kindergarten Gurtenbühl"
-      }
-    },
-    {
-      "type": "way",
-      "id": 1001119102,
-      "center": {
-        "lat": 46.9311193,
-        "lon": 7.4434776
-      },
-      "nodes": [
-        9240820293,
-        9240820292,
-        9240820291,
-        9240820290,
-        9240820293
-      ],
-      "tags": {
-        "amenity": "kindergarten",
-        "check_date": "2026-04-16",
-        "name": "Kindergarten Morillon"
-      }
-    },
-    {
-      "type": "way",
-      "id": 1312588871,
-      "center": {
-        "lat": 46.947075,
-        "lon": 7.416456
-      },
-      "nodes": [
-        8475462429,
-        11727949284,
-        12149530673,
-        12149530674,
-        12149530675,
-        12149530676,
-        12149530678,
-        12149530677,
-        12149530679,
-        12149530680,
-        8475462430,
-        8475462429
-      ],
-      "tags": {
-        "amenity": "kindergarten"
-      }
-    }
-  ]
-}
+  {
+    "id": "osm_node_614844434",
+    "name": "Kindergarten Wankdorf",
+    "lat": 46.9632021,
+    "lng": 7.4620302,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_620033325",
+    "name": "Kindergärten Lorraine 1 + 2",
+    "lat": 46.959418,
+    "lng": 7.4457196,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_1615247146",
+    "name": "Unbekannte Schule",
+    "lat": 46.9401281,
+    "lng": 7.4783943,
+    "address": "Jupiterstrasse 2",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_1763606661",
+    "name": "Kindergarten Sulgenbach",
+    "lat": 46.9396182,
+    "lng": 7.4341023,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_2293072667",
+    "name": "Kindergarten Breitenrain I, II und III",
+    "lat": 46.9592745,
+    "lng": 7.449093,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_2394363807",
+    "name": "Kids & Co Wankdorf",
+    "lat": 46.967153,
+    "lng": 7.4605191,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_2925703788",
+    "name": "Kindergarten Stöckacker",
+    "lat": 46.9450622,
+    "lng": 7.3993477,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_3092144682",
+    "name": "Kindergarten Egelsee 1",
+    "lat": 46.9438712,
+    "lng": 7.4651414,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_3092165929",
+    "name": "Kindergarten Egelsee 2",
+    "lat": 46.9447538,
+    "lng": 7.4664556,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_3092204274",
+    "name": "Kindergarten Florastrasse",
+    "lat": 46.9431755,
+    "lng": 7.4543272,
+    "address": "Florastrasse 11",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_3226157173",
+    "name": "Dennigkofen II",
+    "lat": 46.9517101,
+    "lng": 7.4888515,
+    "address": "Dennigkofenweg 197",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_3504753362",
+    "name": "Kindergarten Schlossmatte",
+    "lat": 46.943436,
+    "lng": 7.4139125,
+    "address": "Schlossmattstrasse 7",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_3504792314",
+    "name": "Kindergarten Brunnenhaus",
+    "lat": 46.9463345,
+    "lng": 7.4267395,
+    "address": "Brunnmattstrasse 10",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_4092269070",
+    "name": "Kindergarten Hochfeld I+II",
+    "lat": 46.9573039,
+    "lng": 7.430067,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_4454976389",
+    "name": "Unbekannte Schule",
+    "lat": 46.9386239,
+    "lng": 7.4220578,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5018206183",
+    "name": "Kindertagesstätte Tabaluga",
+    "lat": 46.9296621,
+    "lng": 7.4505864,
+    "address": "Seftigenstrasse 235",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5035234326",
+    "name": "Schulhaus Wyssloch Modul",
+    "lat": 46.9450068,
+    "lng": 7.4670098,
+    "address": "Egelgasse 29",
+    "type": "Primarschule"
+  },
+  {
+    "id": "osm_node_5269914797",
+    "name": "Kinderhaus Ginkgo",
+    "lat": 46.9520636,
+    "lng": 7.4645708,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5286301710",
+    "name": "KITA Yeladim",
+    "lat": 46.9372233,
+    "lng": 7.4370911,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5351667713",
+    "name": "Waldkindergarten Chindertroum",
+    "lat": 46.9359457,
+    "lng": 7.4252225,
+    "address": "Schwarzenburgstrasse 59",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5351667714",
+    "name": "Waldspielgruppe Chindertroum",
+    "lat": 46.9360153,
+    "lng": 7.4252675,
+    "address": "Schwarzenburgstrasse 59",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5506404217",
+    "name": "Kindergarten Schosshalde I",
+    "lat": 46.9446304,
+    "lng": 7.4616764,
+    "address": "Kleiner Muristalden 40",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5506404220",
+    "name": "Kindegarten Schosshalde II",
+    "lat": 46.9445906,
+    "lng": 7.4617556,
+    "address": "Kleiner Muristalden 40",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5540295412",
+    "name": "Montessori Kinderhaus",
+    "lat": 46.9562578,
+    "lng": 7.4452031,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5605370633",
+    "name": "Kindergarten Dalmaziquai",
+    "lat": 46.9382464,
+    "lng": 7.4451035,
+    "address": "Dalmaziquai 91",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5625387605",
+    "name": "Kindergarten Marzili I",
+    "lat": 46.9421207,
+    "lng": 7.438561,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5625387606",
+    "name": "Kindergarten Marzili II",
+    "lat": 46.9422436,
+    "lng": 7.4387225,
+    "address": "Sulgeneckstrasse 59c",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5644386702",
+    "name": "Kindergarten Dählhölzli",
+    "lat": 46.9368419,
+    "lng": 7.4497173,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5766182323",
+    "name": "Kindergarten Neufeld II",
+    "lat": 46.9556803,
+    "lng": 7.4299307,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5766182324",
+    "name": "Kindergarten Neufeld I",
+    "lat": 46.9555776,
+    "lng": 7.4295947,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_5939907501",
+    "name": "Schulhaus Dorf",
+    "lat": 46.943119,
+    "lng": 7.3903327,
+    "address": "",
+    "type": "Primarschule"
+  },
+  {
+    "id": "osm_node_6184536334",
+    "name": "Schwabgut 1 + 2",
+    "lat": 46.9445522,
+    "lng": 7.3956543,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_6387637127",
+    "name": "Kindergarten Wandermatte",
+    "lat": 46.9299465,
+    "lng": 7.4524349,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_6704336267",
+    "name": "Kindergarten Tscharnergut 2",
+    "lat": 46.9480014,
+    "lng": 7.3863688,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_6744759359",
+    "name": "Kindergarten Spitalacker 1",
+    "lat": 46.9555142,
+    "lng": 7.4549752,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_6744759360",
+    "name": "Kindergarten Spitalacker 2",
+    "lat": 46.9554472,
+    "lng": 7.4552052,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_6747787799",
+    "name": "Kindergarten Tellstrasse 1",
+    "lat": 46.9623945,
+    "lng": 7.4577752,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_6747787800",
+    "name": "Kindergarten Tellstrasse 2",
+    "lat": 46.9625922,
+    "lng": 7.4574951,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_10184244312",
+    "name": "Kindergarten Bümpliz Nord",
+    "lat": 46.9449702,
+    "lng": 7.3931134,
+    "address": "Schwabstrasse 10",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_node_11497543706",
+    "name": "Basisstufen Stationsstrasse",
+    "lat": 46.9304893,
+    "lng": 7.417412,
+    "address": "Stationsstrasse 40",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_32962055",
+    "name": "Schulstandort Bethlehemacker",
+    "lat": 46.9503153,
+    "lng": 7.387302,
+    "address": "",
+    "type": "Primarschule"
+  },
+  {
+    "id": "osm_way_40607192",
+    "name": "Gewerbeschule",
+    "lat": 46.9547028,
+    "lng": 7.4448101,
+    "address": "",
+    "type": "Primarschule"
+  },
+  {
+    "id": "osm_way_40992510",
+    "name": "Unbekannte Schule",
+    "lat": 46.9381295,
+    "lng": 7.4450767,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_42350743",
+    "name": "Kindergarten Elfenau",
+    "lat": 46.9346098,
+    "lng": 7.4655558,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_42398967",
+    "name": "Unbekannte Schule",
+    "lat": 46.9345451,
+    "lng": 7.4656041,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_43627452",
+    "name": "Kindergarten Burgfeld",
+    "lat": 46.9566719,
+    "lng": 7.4772255,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_44016365",
+    "name": "Kindergärten Haspelweg I + II",
+    "lat": 46.9504655,
+    "lng": 7.4665605,
+    "address": "Haspelweg 49",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_44104513",
+    "name": "Kindergarten Baumgarten",
+    "lat": 46.9536564,
+    "lng": 7.4671591,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_46771481",
+    "name": "Kindergarten Spitalacker",
+    "lat": 46.9553378,
+    "lng": 7.4550549,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_48238365",
+    "name": "Unbekannte Schule",
+    "lat": 46.9624138,
+    "lng": 7.4577368,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_48407941",
+    "name": "Schulstandort Breitfeld/Wankdorf",
+    "lat": 46.9636306,
+    "lng": 7.4622958,
+    "address": "",
+    "type": "Primarschule"
+  },
+  {
+    "id": "osm_way_48965754",
+    "name": "Kindergarten Wylergut",
+    "lat": 46.9645037,
+    "lng": 7.4483297,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_50058531",
+    "name": "Kindergarten Bürengut",
+    "lat": 46.9381125,
+    "lng": 7.4397767,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_52066633",
+    "name": "Kinderhaus Vogelflug",
+    "lat": 46.9401783,
+    "lng": 7.4330606,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_52429217",
+    "name": "Kindergarten Steinhölzli",
+    "lat": 46.934693,
+    "lng": 7.4305095,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_52873704",
+    "name": "Schulstandort Pestalozzi",
+    "lat": 46.9401747,
+    "lng": 7.4243904,
+    "address": "",
+    "type": "Primarschule"
+  },
+  {
+    "id": "osm_way_53060898",
+    "name": "Heilpädagogische Schule",
+    "lat": 46.9410091,
+    "lng": 7.4295512,
+    "address": "Tscharnerstrasse 10",
+    "type": "Primarschule"
+  },
+  {
+    "id": "osm_way_54032928",
+    "name": "Kindergarten Bridelstrasse",
+    "lat": 46.9396198,
+    "lng": 7.4219018,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_54936437",
+    "name": "Kindergarten Munzingerstrasse 1+2",
+    "lat": 46.9410344,
+    "lng": 7.422467,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_57941068",
+    "name": "Unbekannte Schule",
+    "lat": 46.9433731,
+    "lng": 7.4139409,
+    "address": "Schlossmattstrasse",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_58364161",
+    "name": "Kindergarten Steigerhubel",
+    "lat": 46.9458748,
+    "lng": 7.4128747,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_75464676",
+    "name": "Tagesschule Länggasse",
+    "lat": 46.956524,
+    "lng": 7.431292,
+    "address": "",
+    "type": "Primarschule"
+  },
+  {
+    "id": "osm_way_76092617",
+    "name": "Kindergarten Bonstetten",
+    "lat": 46.958638,
+    "lng": 7.4384992,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_92420420",
+    "name": "Kindergarten Blinzern",
+    "lat": 46.9206274,
+    "lng": 7.423103,
+    "address": "Adlerweg",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_94080834",
+    "name": "Kleefeld I",
+    "lat": 46.9365922,
+    "lng": 7.3869793,
+    "address": "Rehhagstrasse 41a",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_94792345",
+    "name": "Kindergarten Statthalter",
+    "lat": 46.939052,
+    "lng": 7.392254,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_95838951",
+    "name": "Kirchacker II",
+    "lat": 46.941564,
+    "lng": 7.39925,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_95838968",
+    "name": "Kirchacker I",
+    "lat": 46.9414238,
+    "lng": 7.3996685,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_96211630",
+    "name": "Kindergarten Tscharnergut 1",
+    "lat": 46.947952,
+    "lng": 7.3879321,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_96748976",
+    "name": "Kindergarten Winterhalde",
+    "lat": 46.9420513,
+    "lng": 7.3812871,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_217851350",
+    "name": "Unbekannte Schule",
+    "lat": 46.9438421,
+    "lng": 7.4651492,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_244224886",
+    "name": "Unbekannte Schule",
+    "lat": 46.9367693,
+    "lng": 7.4499711,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_245198156",
+    "name": "Kindergarten Horbern I / II",
+    "lat": 46.9294757,
+    "lng": 7.4863915,
+    "address": "Belpstrasse 15",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_248042655",
+    "name": "Kindergarten Sonnenhof",
+    "lat": 46.9424152,
+    "lng": 7.470826,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_251611220",
+    "name": "Unbekannte Schule",
+    "lat": 46.944715,
+    "lng": 7.4664845,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_260628674",
+    "name": "Schulhaus Markus",
+    "lat": 46.9624465,
+    "lng": 7.4564761,
+    "address": "",
+    "type": "Primarschule"
+  },
+  {
+    "id": "osm_way_284262257",
+    "name": "Kindergarten Weissenstein I",
+    "lat": 46.9367175,
+    "lng": 7.4176491,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_305844853",
+    "name": "Kindergarten Fricktreppe",
+    "lat": 46.9463609,
+    "lng": 7.4500281,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_316491929",
+    "name": "Unbekannte Schule",
+    "lat": 46.9517718,
+    "lng": 7.488983,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_317249585",
+    "name": "Wabersacker II",
+    "lat": 46.9281917,
+    "lng": 7.4241729,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_340737930",
+    "name": "Kindergärten Kirchacker I+II",
+    "lat": 46.9414253,
+    "lng": 7.3995555,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_573306030",
+    "name": "Unbekannte Schule",
+    "lat": 46.926708,
+    "lng": 7.4323407,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_589079692",
+    "name": "Unbekannte Schule",
+    "lat": 46.9422,
+    "lng": 7.4386858,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_608676593",
+    "name": "Neufeld 2 & 3",
+    "lat": 46.9556222,
+    "lng": 7.4298222,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_640961551",
+    "name": "Unbekannte Schule",
+    "lat": 46.9594174,
+    "lng": 7.4455339,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_690305580",
+    "name": "Kinderhaus Elfenau",
+    "lat": 46.9415652,
+    "lng": 7.4272833,
+    "address": "Hopfenweg 18",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_734632842",
+    "name": "Kindergarten",
+    "lat": 46.9519965,
+    "lng": 7.390295,
+    "address": "Kasparstrasse 15c",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_1001119101",
+    "name": "Kindergarten Gurtenbühl",
+    "lat": 46.9293423,
+    "lng": 7.4410049,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_1001119102",
+    "name": "Kindergarten Morillon",
+    "lat": 46.9311193,
+    "lng": 7.4434776,
+    "address": "",
+    "type": "Kindergarten"
+  },
+  {
+    "id": "osm_way_1312588871",
+    "name": "Unbekannte Schule",
+    "lat": 46.947075,
+    "lng": 7.416456,
+    "address": "",
+    "type": "Kindergarten"
+  }
+]
