@@ -300,7 +300,7 @@ export default function RoutePanel({
                 <SelectValue placeholder="Schule waehlen..." />
               </SelectTrigger>
               <SelectContent>
-                {sortedSchools.map((s) => {
+                {(sortedSchools || []).map((s) => {
                   const dist = startPoint
                     ? (haversineJS(startPoint.lat, startPoint.lng, s.lat, s.lng) / 1000).toFixed(1)
                     : null;
