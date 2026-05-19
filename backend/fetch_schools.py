@@ -1,4 +1,5 @@
 import requests, json, sys
+from overpass_client import OverpassClient
 
 query = """[out:json][timeout:25];
 (
@@ -17,4 +18,6 @@ resp = requests.post(
     headers={"User-Agent": "curl/7.68.0"},
     timeout=30
 )
-print(json.dumps(resp.json()))
+elements = resp.json().get("elements", [])
+schools = OverpassClient._parse_schools(elements)
+print(json.dumps(schools))
