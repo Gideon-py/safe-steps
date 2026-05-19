@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY *.py .
 COPY schools_cache.json ./schools_cache.json
 
-RUN python fetch_schools.py > schools_cache.json || true
+RUN python fetch_schools.py > /tmp/schools_tmp.json && mv /tmp/schools_tmp.json schools_cache.json || echo "Using pre-baked schools cache"
 
 EXPOSE 8001
 

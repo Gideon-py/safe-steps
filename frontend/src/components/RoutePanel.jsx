@@ -292,7 +292,7 @@ export default function RoutePanel({
             <Select
               value={selectedSchool?.id || ""}
               onValueChange={(val) => {
-                const s = schools.find((sc) => sc.id === val);
+                const s = (schools || []).find((sc) => sc.id === val);
                 if (s) onSchoolSelect(s);
               }}
             >
