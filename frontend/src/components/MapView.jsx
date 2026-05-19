@@ -161,7 +161,7 @@ export default function MapView({
         ))}
 
         {/* School markers */}
-        {schools.map((s) => (
+        {(schools || []).map((s) => (
           <Marker
             key={s.id}
             position={[s.lat, s.lng]}
