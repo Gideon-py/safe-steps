@@ -237,8 +237,8 @@ export default function RoutePanel({
 
   // Sort schools by distance to startPoint
   const sortedSchools = useMemo(() => {
-    if (!startPoint || !schools.length) return schools;
-    return [...schools].sort((a, b) => {
+    if (!startPoint || !(schools || []).length) return schools || [];
+    return [...(schools || [])].sort((a, b) => {
       const dA = haversineJS(startPoint.lat, startPoint.lng, a.lat, a.lng);
       const dB = haversineJS(startPoint.lat, startPoint.lng, b.lat, b.lng);
       return dA - dB;
