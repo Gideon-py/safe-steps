@@ -75,12 +75,17 @@ class OverpassClient:
         logger.info(f"Cache file exists: {os.path.exists(cache_file)}, path: {cache_file}")
 
         if os.path.exists(cache_file):
-            with open(cache_file, encoding="utf-8") as f:
-                schools = json.load(f)
-            if schools:
-                logger.info(f"Schools loaded from file cache: {len(schools)}")
-                self.schools_cache.put(SCHOOLS_CACHE_KEY, schools)
-                return schools
+            try:
+                with open(cache_file, encoding="utf-8") as f:
+                    content = f.read().strip()
+                if content and content != "[]":
+                    schools = json.loads(content)
+                    if schools:
+                        logger.info(f"Schools loaded from file: {len(schools)}")
+                        self.schools_cache.put(SCHOOLS_CACHE_KEY, schools)
+                        return schools
+            except Exception as e:
+                logger.warning(f"Could not read schools cache: {e}")
         else:
             query = (
                 '[out:json][timeout:25];'
