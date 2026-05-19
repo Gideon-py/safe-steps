@@ -72,6 +72,8 @@ class OverpassClient:
             return cached
 
         cache_file = os.path.join(os.path.dirname(__file__), "schools_cache.json")
+        logger.info(f"Cache file exists: {os.path.exists(cache_file)}, path: {cache_file}")
+
         if os.path.exists(cache_file):
             with open(cache_file, encoding="utf-8") as f:
                 schools = json.load(f)
@@ -79,29 +81,29 @@ class OverpassClient:
                 logger.info(f"Schools loaded from file cache: {len(schools)}")
                 self.schools_cache.put(SCHOOLS_CACHE_KEY, schools)
                 return schools
-
-        query = (
-            '[out:json][timeout:25];'
-            '('
-            f'node["amenity"="kindergarten"]({SCHOOLS_BBOX});'
-            f'way["amenity"="kindergarten"]({SCHOOLS_BBOX});'
-            f'node["amenity"="school"]["isced:level"~"1"]({SCHOOLS_BBOX});'
-            f'way["amenity"="school"]["isced:level"~"1"]({SCHOOLS_BBOX});'
-            f'node["amenity"="school"]["operator"="Stadt Bern"]({SCHOOLS_BBOX});'
-            f'way["amenity"="school"]["operator"="Stadt Bern"]({SCHOOLS_BBOX});'
-            ');'
-            'out center;'
-        )
-        try:
-            import asyncio
-            loop = asyncio.get_event_loop()
-            raw = await loop.run_in_executor(None, self._fetch_schools_sync, query)
-            schools = self._parse_schools(raw.get("elements", []))
-            self.schools_cache.put(SCHOOLS_CACHE_KEY, schools)
-            return schools
-        except Exception as e:
-            logger.warning("Overpass schools query failed: %s", e)
-            return []
+        else:
+            query = (
+                '[out:json][timeout:25];'
+                '('
+                f'node["amenity"="kindergarten"]({SCHOOLS_BBOX});'
+                f'way["amenity"="kindergarten"]({SCHOOLS_BBOX});'
+                f'node["amenity"="school"]["isced:level"~"1"]({SCHOOLS_BBOX});'
+                f'way["amenity"="school"]["isced:level"~"1"]({SCHOOLS_BBOX});'
+                f'node["amenity"="school"]["operator"="Stadt Bern"]({SCHOOLS_BBOX});'
+                f'way["amenity"="school"]["operator"="Stadt Bern"]({SCHOOLS_BBOX});'
+                ');'
+                'out center;'
+            )
+            try:
+                import asyncio
+                loop = asyncio.get_event_loop()
+                raw = await loop.run_in_executor(None, self._fetch_schools_sync, query)
+                schools = self._parse_schools(raw.get("elements", []))
+                self.schools_cache.put(SCHOOLS_CACHE_KEY, schools)
+                return schools
+            except Exception as e:
+                logger.warning("Overpass schools query failed: %s", e)
+                return []
 
     async def get_features(self, coords: list) -> dict:
         """

@@ -6,9 +6,9 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY *.py .
-COPY schools_cache.json .
+COPY schools_cache.json ./schools_cache.json
 
-RUN python fetch_schools.py > schools_cache.json || echo "[]" > schools_cache.json
+RUN python fetch_schools.py > schools_cache.json || true
 
 EXPOSE 8001
 
