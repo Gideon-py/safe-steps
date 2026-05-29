@@ -72,8 +72,6 @@ class OverpassClient:
             return cached
 
         cache_file = os.path.join(os.path.dirname(__file__), "schools_cache.json")
-        logger.info(f"Cache file exists: {os.path.exists(cache_file)}, path: {cache_file}")
-
         if os.path.exists(cache_file):
             try:
                 with open(cache_file, encoding="utf-8") as f:
