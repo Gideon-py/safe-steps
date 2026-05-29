@@ -98,7 +98,7 @@ export default function DashboardPage() {
         <div className="absolute top-4 left-4 pointer-events-auto flex items-center gap-3">
           <div className="glass-panel rounded-xl px-4 py-2.5 flex items-center gap-2.5">
             <Shield className="h-5 w-5 text-primary" />
-            <span className="font-bold font-['Barlow'] text-sm tracking-tight text-foreground">SafeSteps Bern</span>
+            <span className="font-bold font-['Barlow'] text-sm tracking-tight text-foreground">SafeSteps</span>
           </div>
         </div>
 

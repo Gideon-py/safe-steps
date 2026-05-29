@@ -59,7 +59,7 @@ export default function AuthPage() {
               <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
                 <Shield className="h-5 w-5 text-primary" />
               </div>
-              <span className="text-xl font-bold font-['Barlow'] tracking-tight text-foreground">SafeSteps Bern</span>
+              <span className="text-xl font-bold font-['Barlow'] tracking-tight text-foreground">SafeSteps</span>
             </div>
             <h1 className="text-3xl font-bold font-['Barlow'] tracking-tight text-foreground">
               Sichere Schulwege finden
@@ -154,7 +154,7 @@ export default function AuthPage() {
 
           <p className="text-xs text-muted-foreground text-center pt-4">
             <MapPin className="inline h-3 w-3 mr-1" />
-            SafeSteps Bern - Prototyp / Demo-Version
+            SafeSteps - Prototyp / Demo-Version
           </p>
         </div>
       </div>
