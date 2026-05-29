@@ -104,19 +104,21 @@ class AareProvider:
             url = "https://aareguru.ch/v2018/current?city=bern&app=SafeStepsBern&version=1.0"
             async with httpx.AsyncClient(timeout=10.0) as client:
                 resp = await client.get(url)
-                if resp.status_code == 200:
+                if resp.status_code != 200:
+                    logger.warning("Aare API returned status %s", resp.status_code)
+                else:
                     d = resp.json()
                     aare = d.get("aare", d)
-                    temp = aare.get("temperature", aare.get("temperature_prec", 15))
-                    flow = aare.get("flow", 150)
+                    temp = float(aare.get("temperature") or aare.get("temperature_prec") or 15)
+                    flow = float(aare.get("flow") or 150)
                     return {
                         "source": "live",
                         "provider": "aare.guru",
                         "data": {
                             "temperature": temp,
-                            "temperature_text": aare.get("temperature_text", f"{temp} C"),
+                            "temperature_text": aare.get("temperature_text", ""),
                             "flow": flow,
-                            "flow_text": aare.get("flow_text", f"{flow} m3/s"),
+                            "flow_text": aare.get("flow_text", ""),
                             "danger_level": self._danger(temp, flow),
                             "danger_text": self._danger_text(temp, flow),
                         },

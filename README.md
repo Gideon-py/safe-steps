@@ -14,6 +14,8 @@ Web-App die Eltern die sicherste und schnellste Schulroute für ihre Kinder in B
 
 **Voraussetzung:** [Docker Desktop](https://www.docker.com/products/docker-desktop) installiert
 
+Terminal öffnen (Windows: `Win + R` → `cmd`, Mac: `Cmd + Leertaste` → Terminal) und folgende Befehle eingeben:
+
 ```
 git clone https://github.com/Gideon-py/safe-steps.git
 cd safe-steps
